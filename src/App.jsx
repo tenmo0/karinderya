@@ -7,11 +7,11 @@ import { useState, useEffect } from "react";
 function Home({ goLogin }) {
   
  const foodImages = [
-  "/public/2.png",
-  "/public/3.png",
-  "/public/4.png",
-  "/public/5.png",
-  "/public/7.png",
+  "/2.png",
+  "/3.png",
+  "/4.png",
+  "/5.png",
+  "/7.png",
 ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
