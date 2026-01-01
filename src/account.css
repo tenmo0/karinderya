@@ -1,0 +1,67 @@
+/* Page background */
+.account-container {
+  width: 390px;              /* iPhone 13 width */
+  height: 844px;
+  color: #16361f; /* light cream */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 20px;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Title */
+.account-container h2 {
+  font-family: "Pacifico", cursive;
+  font-size: 40px;
+  color: #f6edc1;
+  margin-bottom: 25px;
+}
+
+/* Account card */
+.account-card {
+  background-color: #16361f; /* dark green */
+  width: 100%;
+  max-width: 420px;
+  padding: 35px 30px;
+  border-radius: 6px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+/* Text inside card */
+.account-card p {
+  color: #e6d38a; /* gold/yellow */
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  margin-bottom: 18px;
+}
+
+/* CENTER ONLY FIRST NAME & LAST NAME */
+.account-card p:nth-child(2),
+.account-card p:nth-child(3) {
+  text-align: center;
+}
+
+/* Bold labels */
+.account-card strong {
+  color: #f6edc1;
+  font-weight: 600;
+}
+
+/* Logout button */
+.account-container button {
+  margin-top: 25px;
+  padding: 10px 26px;
+  background-color: #16361f;
+  color: #f6edc1;
+  border: 2px solid #16361f;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.account-container button:hover {
+  background-color: transparent;
+  color: #16361f;
+}

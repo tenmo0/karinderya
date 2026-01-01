@@ -1,0 +1,98 @@
+/* Overlay background */
+.signup-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(15, 42, 23, 0.85); /* dark green overlay */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Modal card */
+.signup-card {
+  background-color: #0f2a17; /* dark green */
+  padding: 30px 40px;
+  border-radius: 12px;
+  width: 350px;
+  max-width: 90%;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  border: 2px solid #f6efc2;
+}
+
+/* Title */
+.signup-card h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #f6efc2; /* cream */
+  letter-spacing: 1px;
+}
+
+/* Labels */
+.signup-card label {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #f6efc2;
+}
+
+/* Inputs */
+.signup-card input {
+  margin-top: 6px;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 14px;
+  background-color: #f6efc2; /* cream input */
+  color: #12351d;
+}
+
+.signup-card input::placeholder {
+  color: #4b5f50;
+}
+
+/* Buttons container */
+.signup-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 25px;
+  gap: 10px;
+}
+
+/* Buttons */
+.signup-buttons button {
+  flex: 1;
+  padding: 10px 0;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+
+/* Sign Up button */
+.signup-buttons button:first-child {
+  background-color: #0a7a1f; /* CVSU green */
+  color: #f6efc2;
+}
+
+.signup-buttons button:first-child:hover {
+  background-color: #0e9229;
+}
+
+/* Cancel button */
+.signup-buttons button:last-child {
+  background-color: #1e5b2e; /* darker green */
+  color: #f6efc2;
+}
+
+.signup-buttons button:last-child:hover {
+  background-color: #2c7a45;
+}

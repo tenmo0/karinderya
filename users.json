@@ -1,0 +1,44 @@
+[
+  {
+    "firstName": "kheneth",
+    "lastName": "sorbito",
+    "email": "kheneth.sorbito@cvsu.edu.ph",
+    "password": "12345678"
+  },
+  {
+    "firstName": "neth",
+    "lastName": "srobti",
+    "email": "wa@cvsu.edu.ph",
+    "password": "$2b$10$89XziuoIu5bWZISr4kzkvuEmU7Y7dltgCAQylzVPJjAiFAVyywQ7W"
+  },
+  {
+    "firstName": "jeann",
+    "lastName": "mabala",
+    "email": "jeann@cvsu.edu.ph",
+    "password": "$2b$10$fh5ypc2JVXTzU4HXgyydHOn3yKmfbas/4EgUT9nwAHN8HuVNZfgWe"
+  },
+  {
+    "firstName": "123",
+    "lastName": "123",
+    "email": "1@cvsu.edu.ph",
+    "password": "$2b$10$jQ08wfTNnintfg9ZCz/IluBNlWxGD3fetEs9CQ5OA89lsBXWaZ992"
+  },
+  {
+    "firstName": "123",
+    "lastName": "123",
+    "email": "2@cvsu.edu.ph",
+    "password": "$2b$10$UTuPk93HD9LHcHOZFxY7rOSfH.7.nSP7kX.uJA1aT.l/aU8LTH.8a"
+  },
+  {
+    "firstName": "kheneth",
+    "lastName": "sdasd",
+    "email": "neth@cvsu.edu.ph",
+    "password": "$2b$10$BxBkb5AH4SWNFM2XEciXouPmDCvyTtIlB4qEbaX7.zgx4TbJH0Che"
+  },
+  {
+    "firstName": "kheneth",
+    "lastName": "sorbito",
+    "email": "ken@cvsu.edu.ph",
+    "password": "$2b$10$12Loh3ekFc9bKwHxwcakmOXAM/CZT4ro2Jeyb.g6jMYfyFuodrcrq"
+  }
+]
