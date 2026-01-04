@@ -31,7 +31,7 @@ function Home({ goLogin }) {
     <div className="phone">
       <div className="home-top">
         <button className="login-btn" onClick={goLogin}>
-          LOGIN / SIGN-UP
+          LOGIN / SIGNUP
         </button>
       </div>
 
@@ -115,7 +115,7 @@ function Login({ goBack, onLoginSuccess }) {
 
       <div className="login-container">
         <div className="login-card">
-          <h2>LOGIN / SIGN-UP</h2>
+          <h2>LOGIN</h2>
 
           <label>CVSU EMAIL:</label>
           <input
@@ -247,7 +247,7 @@ function Navbar({ setPage, onLogout }) {
 import Reserve from "./Reserve"; // new component
 import "./reserve.css";
 
-const BACKEND_URL = "http://192.168.18.3:5000"; // 🔑 LAN IP of your PC
+const BACKEND_URL = "http://192.168.18.3:5000";
 
 function Eateries({ user: userProp }) {
   const [user] = useState(() => {
@@ -280,7 +280,8 @@ function Eateries({ user: userProp }) {
     fetchUlams();
   }, []);
 
-  const getImageUrl = (imagePath) => (imagePath ? `${BACKEND_URL}${imagePath}` : "");
+  // ✅ CHANGED: Images now load from frontend public folder
+  const getImageUrl = (imagePath) => imagePath || "";
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
@@ -355,7 +356,7 @@ function Pinggang() {
       <div className="pinggang-box">
         {!showDesc ? (
           <img
-            src="src\Pinggang.png"
+            src="src/Pinggang.png"
             alt="Pinggang Pinoy Guide"
             onClick={() => setShowDesc(true)}
             style={{ cursor: "pointer" }}

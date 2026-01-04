@@ -51,17 +51,22 @@ function Reserve({ user, ulam, activeStall, onClose }) {
     }
   };
 
-  if (loading) return <div className="ulam-modal-overlay"><p style={{color: "white"}}>Processing...</p></div>;
+  if (loading) {
+    return (
+      <div className="ulam-modal-overlay">
+        <p style={{color: "white"}}>Processing...</p>
+      </div>
+    );
+  }
 
   if (reserved && reserveData) {
     return (
       <div className="reserve-success-container">
         <div className="reserve-success-card fade-in">
-          <h1>Successfully Reserved!</h1>
-          <p>CLAIM AT STALL {reserveData.stall}</p>
-          <p>CUSTOMER: {reserveData.userName.toUpperCase()}</p>
-          <p>TOTAL: ₱{reserveData.price}</p>
-          <button className="reserve-btn" onClick={onClose}>Close</button>
+          <h1>Successfully<br/>Reserved!</h1>
+          <p className="stall-info">CLAIM AT STALL {reserveData.stall}</p>
+          <p className="customer-info">NAMED: {reserveData.userName.toUpperCase()}</p>
+          <button className="reserve-final-btn" onClick={onClose}>RESERVE</button>
         </div>
       </div>
     );
@@ -73,27 +78,27 @@ function Reserve({ user, ulam, activeStall, onClose }) {
         {error && <div className="error-banner">{error}</div>}
         
         <img 
-          src={`${BACKEND_URL}${ulam.image}`} 
+          src={ulam.image || "https://via.placeholder.com/200"} 
           alt={ulam.name} 
-          onError={(e) => e.target.src = "https://via.placeholder.com/150"} 
+          onError={(e) => {
+            console.log("Image failed to load:", ulam.image);
+            e.target.src = "https://via.placeholder.com/200";
+          }} 
         />
         
         <h2>{ulam.name}</h2>
 
         <div className="ulam-info">
-          {/* --- DESCRIPTION SECTION --- */}
           <h4>DESCRIPTION:</h4>
           <p className="description-text">
             {ulam.description || "No description available for this dish."}
           </p>
 
-          {/* --- INGREDIENTS SECTION --- */}
           <h4>INGREDIENTS:</h4>
           <p>{ulam.ingredients?.length ? ulam.ingredients.join(", ") : "Not specified"}</p>
           
-          {/* --- ALLERGENS SECTION --- */}
           <h4>ALLERGENS:</h4>
-          <p className="allergen-text" style={{ color: ulam.allergens?.length ? "#d32f2f" : "inherit" }}>
+          <p className="allergen-text" style={{ color: ulam.allergens?.length ? "#ffd6d6" : "inherit" }}>
             {ulam.allergens?.length ? ulam.allergens.join(", ") : "None"}
           </p>
         </div>

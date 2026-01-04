@@ -76,5 +76,29 @@
     "lastName": "flores",
     "email": "mav@cvsu.edu.ph",
     "password": "$2b$10$KbyWDnLXCpQeNOVckQ8nc.VRNMxxE2srIe7pknCt6rSW4NByBGp5K"
+  },
+  {
+    "id": 1767521454850,
+    "firstName": "neth",
+    "lastName": "eqwewq",
+    "email": "nethh@cvsu.edu.ph",
+    "password": "12345678",
+    "createdAt": "2026-01-04T10:10:54.850Z"
+  },
+  {
+    "id": 1767521671907,
+    "firstName": "ward",
+    "lastName": "lariuo",
+    "email": "ward@cvsu.edu.ph",
+    "password": "12345678",
+    "createdAt": "2026-01-04T10:14:31.907Z"
+  },
+  {
+    "id": 1767521807852,
+    "firstName": "ralph",
+    "lastName": "frani",
+    "email": "ralph.frani@cvsu.edu.ph",
+    "password": "12345678",
+    "createdAt": "2026-01-04T10:16:47.852Z"
   }
 ]
