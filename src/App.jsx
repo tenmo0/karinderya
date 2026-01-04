@@ -62,36 +62,44 @@ import SignupModal from "./SignupModal"
 import MyAccount from './MyAccount';
 
 function Login({ goBack, onLoginSuccess }) {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [showSignup, setShowSignup] = useState(false)
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showSignup, setShowSignup] = useState(false);
 
-  
-const handleLogin = async () => {
-  if (!email || !password) {
-    alert("Please enter email and password")
-    return
-  }
-
-  try {
-    const res = await fetch("http://192.168.18.3:5000/login", {  // <- IP here
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password })
-    })
-
-    const data = await res.json()
-
-    if (res.ok) { // check HTTP status
-      onLoginSuccess(data.user)
-    } else {
-      alert(data.message)
+  const handleLogin = async () => {
+    if (!email || !password) {
+      alert("Please enter email and password");
+      return;
     }
-  } catch (err) {
-    console.error(err)
-    alert("Server error")
-  }
-}
+
+    try {
+      const res = await fetch("http://192.168.18.3:5000/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+  // ✅ SAVE USER FOR EATERIES & REFRESH
+  localStorage.setItem("user", JSON.stringify(data.user));
+
+  onLoginSuccess(data.user);
+}if (res.ok) {
+        // Login successful
+        onLoginSuccess(data.user);
+      } else if (data && data.message) {
+        // Server returned an error message
+        alert(data.message);
+      } else {
+        alert("Unknown error occurred");
+      }
+    } catch (err) {
+      console.error("Fetch error:", err);
+      alert("Cannot reach server. Please check backend.");
+    }
+  };
 
   return (
     <div className="phone">
@@ -113,7 +121,7 @@ const handleLogin = async () => {
           <input
             placeholder="e.g., name@cvsu.edu.ph"
             value={email}
-            onChange={e => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
           />
 
           <label>PASSWORD:</label>
@@ -121,15 +129,13 @@ const handleLogin = async () => {
             type="password"
             placeholder="Enter your password"
             value={password}
-            onChange={e => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
           />
 
-          {/* LOGIN */}
           <button className="login-submit" onClick={handleLogin}>
             LOGIN
           </button>
 
-          {/* OPEN SIGN-UP MODAL */}
           <button className="signup-submit" onClick={() => setShowSignup(true)}>
             SIGN-UP
           </button>
@@ -140,11 +146,11 @@ const handleLogin = async () => {
         </div>
       </div>
 
-      {/* Show Signup Modal */}
       {showSignup && <SignupModal close={() => setShowSignup(false)} />}
     </div>
-  )
+  );
 }
+
 
 function Tabs({ setPage }) {
   return (
@@ -156,11 +162,17 @@ function Tabs({ setPage }) {
   )
 }
 /* ================= CAFETERIA UI ================= */
-function Navbar({ setPage }) {
+function Navbar({ setPage, onLogout }) {
   const [open, setOpen] = useState(false);
+
+  const goTo = (page) => {
+    setPage(page);
+    setOpen(false);
+  };
 
   return (
     <>
+      {/* Top Navbar */}
       <div className="nav">
         <div className="menu-icon" onClick={() => setOpen(!open)}>
           ☰
@@ -171,94 +183,165 @@ function Navbar({ setPage }) {
           <p>EAT MORE, WORRY LESS</p>
         </div>
 
-        <img src="src/LOGO.png" className="nav-img" />
+        <img src="src/LOGO.png" className="nav-img" alt="Logo" />
       </div>
 
+      {/* Side Menu */}
       {open && (
-  <div className="side-menu">
-    <ul>
-      <li>
-        <button onClick={() => {
-          setPage("eateries");
-          setOpen(false);
-        }}>
-        <div className="menu-icon" onClick={() => setOpen(!open)}>
-          ☰
+        <div className="side-menu">
+          <ul>
+            <li>
+              <button className="menu-icon" onClick={() => goTo("eateries")}>
+               ☰
+              </button>
+            </li>
+            <li>
+              <button onClick={() => goTo("eateries")}>
+                EATERIES
+              </button>
+            </li>
+
+            <li>
+              <button onClick={() => goTo("account")}>
+                MY ACCOUNT
+              </button>
+            </li>
+
+            <li>
+              <button onClick={() => goTo("pinggang")}>
+                PINGGANG PINOY
+              </button>
+            </li>
+
+            <li>
+              <button onClick={() => goTo("ulam")}>
+                ULAM OF THE DAY
+              </button>
+            </li>
+
+            <li>
+              <button onClick={() => goTo("about")}>
+                ABOUT US
+              </button>
+            </li>
+
+            <li>
+              <button
+                className="logout-btn"
+                onClick={() => {
+                  onLogout();     // 🔥 App.handleLogout
+                  setOpen(false);
+                }}
+              >
+                LOG OUT
+              </button>
+            </li>
+          </ul>
         </div>
-       </button>
-      </li>
-      <li>
-        <button onClick={() => {
-          setPage("faves");
-          setOpen(false);
-        }}>
-          ALL TIME FAVES
-        </button>
-      </li>
-
-      <li>
-       <button onClick={() => {setPage("account");setOpen(false);}}>
-  MY ACCOUNT
-</button>
-      </li>
-
-      <li>
-        <button onClick={() => {
-          setPage('pinggang');
-          setOpen(false);
-        }}>
-          PINGGANG PINOY
-        </button>
-      </li>
-
-      <li>
-        <button onClick={() => {
-          setPage("ulam");
-          setOpen(false);
-        }}>
-          ULAM OF THE DAY
-        </button>
-      </li>
-
-      <li>
-        <button onClick={() => {
-          setPage("about");
-          setOpen(false);
-        }}>
-          ABOUT US
-        </button>
-      </li>
-<li>
-  <button
-    onClick={() => {
-      setOpen(false);   // close menu
-             // 🔥 logout (App → Cafeteria → MyAccount)
-    }}
-  >
-    LOG OUT
-  </button>
-</li>
-    </ul>
-  </div>
-)}
-
+      )}
     </>
   );
 }
 
-function Eateries() {
+
+import Reserve from "./Reserve"; // new component
+import "./reserve.css";
+
+const BACKEND_URL = "http://192.168.18.3:5000"; // 🔑 LAN IP of your PC
+
+function Eateries({ user: userProp }) {
+  const [user] = useState(() => {
+    if (userProp) return userProp;
+    const stored = localStorage.getItem("user");
+    return stored ? JSON.parse(stored) : null;
+  });
+
+  const [activeStall, setActiveStall] = useState(null);
+  const [ulams, setUlams] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [selectedUlam, setSelectedUlam] = useState(null);
+
+  if (!user) return <p>Please login first</p>;
+
+  useEffect(() => {
+    const fetchUlams = async () => {
+      try {
+        const res = await fetch(`${BACKEND_URL}/ulams`);
+        if (!res.ok) throw new Error("Failed to fetch ulams");
+        const data = await res.json();
+        setUlams(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchUlams();
+  }, []);
+
+  const getImageUrl = (imagePath) => (imagePath ? `${BACKEND_URL}${imagePath}` : "");
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p style={{ color: "red" }}>{error}</p>;
+
   return (
     <div className="content">
-      <h2 className="title_EATERIES">Eateries</h2>
-      <div className="stall-grid">
-        <div className="stall">STALL 1</div>
-        <div className="stall">STALL 2</div>
-        <div className="stall">STALL 3</div>
-        <div className="stall">STALL 4</div>
-       
-      </div>
+      {/* ===== STALL SELECT ===== */}
+      {activeStall === null && (
+        <>
+          <h2 className="title_EATERIES">Eateries</h2>
+          <div className="stall-grid">
+            <div className="stall" onClick={() => setActiveStall(1)}>STALL 1</div>
+            <div className="stall" onClick={() => setActiveStall(2)}>STALL 2</div>
+          </div>
+        </>
+      )}
+
+      {[1, 2].map((stallNum) => {
+        if (activeStall !== stallNum) return null;
+        const stallUlams = ulams.filter((u) => Number(u.stall) === stallNum);
+        const ulamOfToday = stallUlams.find((u) => u.isUlamOfTheDay) || stallUlams[0];
+
+        return (
+          <div key={stallNum} className="stall-container">
+            <h3 className="ulam-today-title">ULAM OF THE DAY</h3>
+
+            <div className="stall-header">
+              <h1>Stall {stallNum}</h1>
+            </div>
+
+            {ulamOfToday && <div className="ulam-today-banner">ULAM OF THE DAY</div>}
+
+            <div className="ulam-grid">
+              {stallUlams.map((u) => (
+                <div
+                  key={u.id}
+                  className={`ulam-card ${u === ulamOfToday ? "featured" : ""}`}
+                  onClick={() => setSelectedUlam(u)}
+                >
+                  {u === ulamOfToday && <span className="star">★</span>}
+                  <img src={getImageUrl(u.image)} alt={u.name} />
+                  <span className="ulam-name">{u.name}</span>
+                </div>
+              ))}
+            </div>
+
+            <button className="bb" onClick={() => setActiveStall(null)}>← Back</button>
+          </div>
+        );
+      })}
+
+      {selectedUlam && (
+        <Reserve
+          user={user}
+          ulam={selectedUlam}
+          activeStall={activeStall}
+          onClose={() => setSelectedUlam(null)}
+        />
+      )}
     </div>
-  )
+  );
 }
 
 function Pinggang() {
@@ -394,12 +477,14 @@ function Cafeteria({ user, onLogout }) {
   return (
     <div className="phone">
       <Navbar setPage={setTab} onLogout={onLogout} />
-
       <Tabs setPage={setTab} />
 
-      {tab === "eateries" && <Eateries />}
+      {/* ✅ PASS USER HERE */}
+      {tab === "eateries" && <Eateries user={user} />}
+
       {tab === "pinggang" && <Pinggang setPage={setTab} />}
       {tab === "about" && <About />}
+
       {tab === "account" && (
         <MyAccount userProp={user} onLogout={onLogout} />
       )}
@@ -410,21 +495,21 @@ function Cafeteria({ user, onLogout }) {
 
 
 /* ================= APP CONTROLLER ================= */
+
 export default function App() {
   const [page, setPage] = useState("home");
   const [user, setUser] = useState(null);
 
   const handleLoginSuccess = (loggedInUser) => {
     setUser(loggedInUser);
-    localStorage.setItem("userEmail", loggedInUser.email);
     setPage("cafeteria");
   };
 
   const handleLogout = () => {
-    setUser(null);
-    localStorage.removeItem("userEmail");
-    setPage("home");
-  };
+  localStorage.removeItem("user");
+  setUser(null);
+  setPage("home");
+};
 
   return (
     <>
@@ -438,10 +523,7 @@ export default function App() {
       )}
 
       {page === "cafeteria" && (
-        <Cafeteria
-          user={user}
-          onLogout={handleLogout}  
-        />
+        <Cafeteria user={user} onLogout={handleLogout} />
       )}
     </>
   );

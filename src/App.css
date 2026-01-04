@@ -153,13 +153,21 @@
   }
 
   .login-body input {
-    width: 100%;
-    color:black;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: none;
-    background: #f6efc2;
-  }
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid black;   /* black border */
+  background: #f6efc2;        /* keep your background */
+  color: black !important;    /* text color */
+  caret-color: black;          /* cursor color */
+}
+
+/* Make placeholder text black too */
+.login-body input::placeholder {
+  color: black !important;
+  opacity: 1;
+}
+
 
   .login-submit {
     width: 120px;
@@ -260,6 +268,7 @@
   margin-bottom: 20px;
   border: none;
   background: #f6efc2;
+  color: black;
 }
 
 /* BUTTONS */
@@ -409,7 +418,12 @@
   border-radius: 6px;
   flex: 1;
 }
-
+.content h1{
+ font-size: 16px;
+  font-weight: bold;
+  font-family: 'Pacifico', cursive;
+  font-size: 22px;
+}
 /* TITLE */
 .title_EATERIES{
   text-align: center;
@@ -871,4 +885,259 @@
   font-size: 12px;
   color: #f6ebc1;
   font-weight: 500;
+}
+
+/* PAGE CONTAINER */
+/* CONTAINER */
+.stall-container {
+  background: #f7edbf;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+/* ULAM OF TODAY TITLE */
+.ulam-today-title {
+  text-align: center;
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: #c39b2c;
+  margin-bottom: 10px;
+}
+
+/* STALL HEADER */
+.stall-header {
+  background: #3f4324;
+  border: 2px solid #8c4bff;
+  padding: 10px;
+  text-align: center;
+  border-radius: 6px;
+}
+
+.stall-header h1 {
+  color: #f3f0d0;
+  font-family: cursive;
+  margin: 0;
+}
+
+/* ULAM OF DAY BAR */
+.ulam-today-banner {
+  background: #0b7a16;
+  color: #fff;
+  text-align: center;
+  padding: 6px;
+  font-weight: 700;
+  margin: 12px 0;
+  border-radius: 4px;
+}
+
+/* GRID */
+.ulam-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-top: 14px;
+}
+
+/* CARD */
+.ulam-card {
+  background: #0b7a16;
+  padding: 10px;
+  border-radius: 6px;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+}
+
+.ulam-card img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* NAME */
+.ulam-name {
+  display: block;
+  margin-top: 6px;
+  font-weight: 700;
+  color: #f7ffcf;
+}
+
+/* FEATURED */
+.ulam-card.featured {
+  box-shadow: 0 0 0 3px #ffd84d;
+}
+
+/* STAR */
+.star {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  color: #ffd84d;
+  font-size: 18px;
+}
+
+/* BACK */
+.bb {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+
+  background: #1a1a1a;
+  color: #fff;
+  padding: 6px 12px;
+  font-size: 13px;
+  border-radius: 20px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  opacity: 0.85;
+}
+
+.bb:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+
+
+.ulam-of-the-day {
+  background: #0a7a14;
+  color: #ffffff;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  padding: 6px 0;
+  margin: 15px 0 25px;
+  text-align: center;
+}
+/* GRID */
+.ulam-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+/* CARD */
+.ulam-card {
+  background: #0a7a14;
+  color: #f5f1d3;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ulam-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+/* IMAGE */
+.ulam-card img {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto 8px;
+}
+
+/* LABEL */
+.ulam-card h3 {
+  font-size: 11px;
+  letter-spacing: 0.8px;
+  margin: 0;
+  color: #c8ff7a;
+}
+
+
+/* FEATURED STAR */
+.ulam-card.featured {
+  position: relative;
+}
+
+.ulam-card.featured::after {
+  content: "★";
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #0a7a14;
+  color: gold;
+  font-size: 14px;
+  padding: 3px 5px;
+  border-radius: 50%;
+}
+
+
+
+.ulam-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.ulam-modal {
+  background: #3b3f1e;
+  color: #f5f1d3;
+  width: 380px;
+  padding: 24px;
+  border-radius: 16px;
+}
+
+.modal-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.price-toggle {
+  display: flex;
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.price-toggle button {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #f5f1d3;
+  background: transparent;
+  color: #f5f1d3;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.price-toggle button.active {
+  background: #f1e28b;
+  color: #3b3f1e;
+}
+
+.price {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.reserve-btn {
+  background: #0a7a29;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  width: 100%;
+  border-radius: 8px;
+  margin-top: 14px;
+}
+
+.close-btn {
+  background: transparent;
+  color: #f5f1d3;
+  border: 1px solid #f5f1d3;
+  padding: 8px;
+  width: 100%;
+  margin-top: 8px;
+  border-radius: 8px;
 }

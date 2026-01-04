@@ -1,0 +1,46 @@
+[
+  {
+    "id": 1,
+    "stall": 1,
+    "name": "Caldereta",
+    "image": "/caldereta.png",
+    "ulamOnlyPrice": 40,
+    "withRicePrice": 50,
+    "ingredients": ["Beef","Potatoes","Carrots"],
+    "allergens": ["Dairy","Soy","Gluten"],
+    "isUlamOfTheDay": true
+  },
+  {
+    "id": 2,
+    "stall": 1,
+    "name": "Adobo",
+    "image": "/adobo.png",
+    "ulamOnlyPrice": 35,
+    "withRicePrice": 45,
+    "ingredients": ["Pork","Soy Sauce","Vinegar"],
+    "allergens": ["Soy","Gluten"],
+    "isUlamOfTheDay": false
+  },
+  {
+    "id": 3,
+    "stall": 1,
+    "name": "Chicken Teriyaki",
+    "image": "/chicken.png",
+    "ulamOnlyPrice": 50,
+    "withRicePrice": 60,
+    "ingredients": ["Chicken","Soy Sauce","Sugar"],
+    "allergens": ["Soy"],
+    "isUlamOfTheDay": false
+  },
+  {
+    "id": 4,
+    "stall": 2,
+    "name": "Tonkatsu",
+    "image": "/tonkatsu.png",
+    "ulamOnlyPrice": 55,
+    "withRicePrice": 65,
+    "ingredients": ["Pork","Breadcrumbs","Egg"],
+    "allergens": ["Egg","Gluten"],
+    "isUlamOfTheDay": true
+  }
+]

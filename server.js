@@ -1,119 +1,116 @@
 const express = require("express");
 const cors = require("cors");
-const bcrypt = require("bcrypt");
 const fs = require("fs");
+const path = require("path");
 
 const app = express();
 const PORT = 5000;
-const USERS_FILE = "./users.json";
 
+// ===== MIDDLEWARE =====
 app.use(cors());
 app.use(express.json());
 
-// Quick test route
-app.get("/", (req, res) => {
-  res.send("🚀 Server is running");
+// Serve images
+app.use("/images", express.static(path.join(__dirname, "public/images")));
+
+// Logger
+app.use((req, res, next) => {
+  console.log(`${new Date().toLocaleTimeString()} | ${req.method} ${req.url}`);
+  next();
 });
 
-// Read users from users.json
-const getUsers = () => {
-  if (!fs.existsSync(USERS_FILE)) return [];
+// ===== FILE PATHS =====
+const USERS_FILE = "./users.json";
+const ULAMS_FILE = "./ulams.json";
+const RESERVE_FILE = "./reserve.json";
+
+// Create files if missing
+[USERS_FILE, ULAMS_FILE, RESERVE_FILE].forEach((file) => {
+  if (!fs.existsSync(file)) fs.writeFileSync(file, "[]");
+});
+
+// Safe JSON reader
+const readJSON = (file) => {
   try {
-    return JSON.parse(fs.readFileSync(USERS_FILE, "utf-8"));
+    return JSON.parse(fs.readFileSync(file, "utf-8") || "[]");
   } catch (err) {
-    console.error("Error reading users.json:", err);
+    console.error(`JSON READ ERROR (${file})`, err);
     return [];
   }
 };
 
-// Save users to users.json
-const saveUsers = (users) => {
-  fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2));
-};
+// ===== ROUTES =====
 
-// SIGN-UP endpoint
-app.post("/signup", async (req, res) => {
-  const { firstName, lastName, email, password } = req.body;
+// Health check
+app.get("/", (req, res) => {
+  res.json({ message: "Server is alive" });
+});
 
-  if (!firstName || !lastName || !email || !password) {
-    return res.status(400).json({ message: "All fields required" });
+// Get ulams
+app.get("/ulams", (req, res) => {
+  res.json(readJSON(ULAMS_FILE));
+});
+
+// ===== RESERVE ROUTE =====
+app.post("/reserve", (req, res) => {
+  try {
+    const { stall, ulamId, withRice, userEmail } = req.body;
+    console.log("📥 RESERVE DATA:", req.body);
+
+    if (!stall || !ulamId || !userEmail) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
+    const users = readJSON(USERS_FILE);
+    const user = users.find((u) => u.email === userEmail);
+    if (!user) {
+      return res.status(401).json({ message: "User not found" });
+    }
+
+    const ulams = readJSON(ULAMS_FILE);
+    const ulam = ulams.find((u) => u.id.toString() === ulamId.toString());
+    if (!ulam) {
+      return res.status(404).json({ message: "Ulam not found" });
+    }
+
+    const price = withRice ? ulam.withRicePrice : ulam.ulamOnlyPrice;
+
+    const reserves = readJSON(RESERVE_FILE);
+    const reservation = {
+      id: Date.now(),
+      stall: Number(stall),
+      ulamId: ulam.id,
+      ulamName: ulam.name,
+      price,
+      userName: `${user.firstName} ${user.lastName}`,
+      userEmail,
+      createdAt: new Date().toISOString(),
+    };
+
+    reserves.push(reservation);
+    fs.writeFileSync(RESERVE_FILE, JSON.stringify(reserves, null, 2));
+
+    console.log("✅ RESERVATION SAVED");
+    res.json({ reservation });
+  } catch (err) {
+    console.error("❌ SERVER ERROR:", err);
+    res.status(500).json({ message: "Internal server error" });
   }
+});
 
-  if (!email.endsWith("@cvsu.edu.ph")) {
-    return res.status(400).json({ message: "CVSU email only" });
-  }
-
-  const users = getUsers();
-  if (users.find((u) => u.email === email)) {
-    return res.status(400).json({ message: "User already exists" });
-  }
-
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  users.push({
-    firstName,
-    lastName,
-    email,
-    password: hashedPassword,
-  });
-
-  saveUsers(users);
-
-  res.json({
-    message: "Signup successful",
-    user: { firstName, lastName, email },
+// ===== JSON 404 (NO HTML EVER) =====
+app.use((req, res) => {
+  res.status(404).json({
+    message: "Route not found",
+    path: req.url,
   });
 });
 
-// LOGIN endpoint
-app.post("/login", async (req, res) => {
-  const { email, password } = req.body;
-
-  const users = getUsers();
-  const user = users.find((u) => u.email === email);
-
-  if (!user) {
-    return res.status(400).json({ message: "User not found" });
-  }
-
-  const match = await bcrypt.compare(password, user.password);
-  if (!match) {
-    return res.status(400).json({ message: "Wrong password" });
-  }
-
-  res.json({
-    message: "Login successful",
-    user: {
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-    },
-  });
-});
-
-// NEW: GET account endpoint
-app.get("/account", (req, res) => {
-  const { email } = req.query;
-
-  if (!email) {
-    return res.status(400).json({ message: "Email is required" });
-  }
-
-  const users = getUsers();
-  const user = users.find((u) => u.email === email);
-
-  if (!user) {
-    return res.status(404).json({ message: "User not found" });
-  }
-
-  res.json({
-    email: user.email,
-    firstName: user.firstName,
-    lastName: user.lastName,
-  });
-});
-
-// START SERVER
-app.listen(PORT, () => {
-  console.log(`🚀 Backend running at http://localhost:${PORT}`);
+// ===== START SERVER =====
+app.listen(PORT, "0.0.0.0", () => {
+  console.log("================================");
+  console.log(`Backend running on:`);
+  console.log(`http://localhost:${PORT}`);
+  console.log(`http://192.168.18.3:${PORT}`);
+  console.log("================================");
 });
