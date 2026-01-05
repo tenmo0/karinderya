@@ -175,7 +175,8 @@ function Navbar({ setPage, onLogout }) {
       {/* Top Navbar */}
       <div className="nav">
         <div className="menu-icon" onClick={() => setOpen(!open)}>
-          ☰
+          <img className="menu-icon" src="public/menu.png"  />
+        
         </div>
 
         <div className="nav-logo">
@@ -192,7 +193,8 @@ function Navbar({ setPage, onLogout }) {
           <ul>
             <li>
               <button className="menu-icon" onClick={() => goTo("eateries")}>
-               ☰
+            
+               <img className="menu-icon" src="public/menu.png"  />
               </button>
             </li>
             <li>
@@ -281,8 +283,10 @@ function Eateries({ user: userProp }) {
   }, []);
 
   // ✅ CHANGED: Images now load from frontend public folder
-  const getImageUrl = (imagePath) => imagePath || "";
-
+ const getImageUrl = (imagePath) => {
+  if (!imagePath) return "";
+  return `${BACKEND_URL}${imagePath}`;
+};
   if (loading) return <p>Loading...</p>;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
@@ -299,7 +303,7 @@ function Eateries({ user: userProp }) {
         </>
       )}
 
-      {[1, 2].map((stallNum) => {
+      {[1, 2,3].map((stallNum) => {
         if (activeStall !== stallNum) return null;
         const stallUlams = ulams.filter((u) => Number(u.stall) === stallNum);
         const ulamOfToday = stallUlams.find((u) => u.isUlamOfTheDay) || stallUlams[0];

@@ -2,16 +2,23 @@
 .ulam-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.65);
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 999;
+  animation: overlayFadeIn 0.3s ease-out;
+}
+
+@keyframes overlayFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 /* MODAL - MADE SMALLER */
 .ulam-modal {
-  background: #3f4a1e;
+  background: linear-gradient(135deg, #4a5a28 0%, #3f4a1e 100%);
   width: 280px;
   border-radius: 24px;
   padding: 12px;
@@ -21,6 +28,7 @@
   animation: fadeIn 0.3s ease-in-out;
   max-height: 90vh;
   overflow-y: auto;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
 }
 
 /* IMAGE - SMALLER */
@@ -31,6 +39,12 @@
   border-radius: 50%;
   margin-top: -60px;
   border: 5px solid #3f4a1e;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease;
+}
+
+.ulam-modal img:hover {
+  transform: scale(1.05);
 }
 
 /* TITLE - SMALLER */
@@ -38,12 +52,16 @@
   margin-top: 8px;
   font-size: 18px;
   font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 /* INFO - MORE COMPACT */
 .ulam-info {
   text-align: left;
   margin-top: 8px;
+  background: rgba(0, 0, 0, 0.15);
+  padding: 10px;
+  border-radius: 12px;
 }
 
 .ulam-info h4 {
@@ -52,6 +70,7 @@
   margin: 6px 0 2px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  color: #b8d688;
 }
 
 .ulam-info p {
@@ -67,6 +86,7 @@
 
 .allergen-text {
   color: #ffd6d6;
+  font-weight: 600;
 }
 
 /* RICE TOGGLE - SMALLER */
@@ -74,6 +94,9 @@
   display: flex;
   gap: 8px;
   margin-top: 10px;
+  padding: 3px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
 }
 
 .rice-options button {
@@ -86,15 +109,22 @@
   cursor: pointer;
   background: #1e1e1e;
   color: #fff;
+  transition: all 0.25s ease;
 }
 
 .rice-options button.active {
-  background: #2d2d2d;
+  background: linear-gradient(135deg, #1fa44a 0%, #17873d 100%);
   border: 2px solid #1fa44a;
+  box-shadow: 0 4px 12px rgba(31, 164, 74, 0.4);
 }
 
 .rice-options button:hover {
   background: #2b2b2b;
+  transform: translateY(-1px);
+}
+
+.rice-options button.active:hover {
+  background: linear-gradient(135deg, #22b855 0%, #1a9545 100%);
 }
 
 /* PRICE - SMALLER */
@@ -102,6 +132,7 @@
   font-size: 20px;
   font-weight: 700;
   margin: 10px 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 /* BUTTONS - MORE COMPACT */
@@ -113,7 +144,7 @@
 }
 
 .reserve-btn {
-  background: #1fa44a;
+  background: linear-gradient(135deg, #1fa44a 0%, #17873d 100%);
   border: none;
   padding: 10px;
   border-radius: 8px;
@@ -121,35 +152,47 @@
   font-size: 14px;
   cursor: pointer;
   color: #fff;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(31, 164, 74, 0.3);
 }
 
 .reserve-btn:hover {
-  background: #17873d;
+  background: linear-gradient(135deg, #22b855 0%, #1a9545 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(31, 164, 74, 0.4);
+}
+
+.reserve-btn:active {
+  transform: translateY(0);
 }
 
 .cancel-btn {
-  background: #111;
+  background: rgba(255, 255, 255, 0.1);
   color: #fff;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 8px;
   border-radius: 8px;
   font-size: 13px;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .cancel-btn:hover {
-  background: #2a2a2a;
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 /* SUCCESS CARD */
 .reserve-success-container {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.8);
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(8px);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  animation: overlayFadeIn 0.3s ease-out;
 }
 
 .reserve-success-card {
@@ -159,7 +202,26 @@
   text-align: center;
   color: #fff;
   min-width: 280px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  animation: fadeIn 0.3s ease-in-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.reserve-success-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { transform: translate(0, 0); opacity: 0.5; }
+  50% { transform: translate(10%, 10%); opacity: 0.8; }
 }
 
 .reserve-success-card h1 {
@@ -169,6 +231,9 @@
   line-height: 1.2;
   color: white;
   font-style: italic;
+  text-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 1;
 }
 
 .reserve-success-card .stall-info {
@@ -176,6 +241,8 @@
   font-weight: 600;
   margin: 12px 0;
   letter-spacing: 0.5px;
+  position: relative;
+  z-index: 1;
 }
 
 .reserve-success-card .customer-info {
@@ -183,10 +250,12 @@
   font-weight: 600;
   margin: 12px 0 25px 0;
   letter-spacing: 0.5px;
+  position: relative;
+  z-index: 1;
 }
 
 .reserve-final-btn {
-  background: #ffc107;
+  background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
   color: #1e7a1e;
   border: none;
   padding: 12px 50px;
@@ -196,21 +265,31 @@
   cursor: pointer;
   letter-spacing: 1px;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(255, 193, 7, 0.4);
+  position: relative;
+  z-index: 1;
 }
 
 .reserve-final-btn:hover {
-  background: #ffb300;
+  background: linear-gradient(135deg, #ffca28 0%, #ffc107 100%);
   transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(255, 193, 7, 0.5);
+}
+
+.reserve-final-btn:active {
+  transform: scale(1.02);
 }
 
 /* ERROR BANNER */
 .error-banner {
-  background: #d32f2f;
+  background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
   color: white;
   padding: 8px;
   border-radius: 6px;
   margin-bottom: 10px;
   font-size: 12px;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(211, 47, 47, 0.3);
 }
 
 /* ANIMATION */
@@ -242,4 +321,8 @@
 .ulam-modal::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.3);
   border-radius: 10px;
+}
+
+.ulam-modal::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
 }

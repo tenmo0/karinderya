@@ -10,6 +10,12 @@ function Reserve({ user, ulam, activeStall, onClose }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  // ✅ UPDATED: Load images from backend
+  const getImageUrl = (imagePath) => {
+    if (!imagePath) return "";
+    return `${BACKEND_URL}${imagePath}`;
+  };
+
   const handleReserve = async () => {
     if (!activeStall || !ulam || !user) {
       setError("Missing data. Please ensure you are logged in.");
@@ -78,11 +84,11 @@ function Reserve({ user, ulam, activeStall, onClose }) {
         {error && <div className="error-banner">{error}</div>}
         
         <img 
-          src={ulam.image || "https://via.placeholder.com/200"} 
+          src={getImageUrl(ulam.image)} 
           alt={ulam.name} 
           onError={(e) => {
             console.log("Image failed to load:", ulam.image);
-            e.target.src = "https://via.placeholder.com/200";
+            console.log("Attempted URL:", getImageUrl(ulam.image));
           }} 
         />
         
