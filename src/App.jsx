@@ -73,7 +73,7 @@ function Login({ goBack, onLoginSuccess }) {
     }
 
     try {
-      const res = await fetch("http://192.168.18.3:5000/login", {
+      const res = await fetch(`${BACKEND_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -217,7 +217,7 @@ function Navbar({ setPage, onLogout }) {
 
             <li>
               <button onClick={() => goTo("ulam")}>
-                ULAM OF THE DAY
+                HISTORY
               </button>
             </li>
 
@@ -248,8 +248,8 @@ function Navbar({ setPage, onLogout }) {
 
 import Reserve from "./Reserve"; // new component
 import "./reserve.css";
+import { BACKEND_URL } from './config'; // ✅ Import from config
 
-const BACKEND_URL = "http://192.168.18.3:5000";
 
 function Eateries({ user: userProp }) {
   const [user] = useState(() => {

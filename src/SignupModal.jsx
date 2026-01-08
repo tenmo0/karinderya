@@ -1,6 +1,8 @@
 import { useState } from "react"
 import './sig.css'
 
+import { BACKEND_URL } from './config';
+
 function SignupModal({ close }) {
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
@@ -26,7 +28,7 @@ function SignupModal({ close }) {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/signup", {
+      const res = await fetch(`${BACKEND_URL}/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ firstName, lastName, email, password })

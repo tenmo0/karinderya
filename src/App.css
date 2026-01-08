@@ -77,7 +77,7 @@
    color: #143d1f;
   margin: 0;
   font-weight: bold;
-  font-family: 'Pacifico', cursive;
+    font-family: 'Brush Script MT', cursive, 'Arial';
 }
 
 .text-section p {
@@ -123,7 +123,7 @@
 
 /* Text side */
 .brand h1 {
-  font-family: 'Pacifico', cursive;
+  font-family: 'Brush Script MT', cursive, 'Arial';
   font-size: 34px;
   margin: 0;
   margin-top: 12px;
@@ -320,7 +320,7 @@
 
 .nav-logo h1 {
   font-weight: bold;
-  font-family: 'Pacifico', cursive;
+  font-family: 'Brush Script MT', cursive, 'Arial';
   font-size: 22px;
   margin: 0;
   color: #f6efc2;
@@ -499,6 +499,7 @@
   font-size: 12px;
   cursor: pointer;
   color: #1d3b1d;
+
 }
 
 /* CONTENT WRAPPER */
@@ -518,10 +519,10 @@
 /* TITLE */
 .title_EATERIES{
   text-align: center;
-  font-size: 40px;
+  font-size: 50px;
   color: #f6efc2;
   margin-bottom: 20px;
-    font-family: 'Pacifico', cursive;
+    font-family: 'Brush Script MT', cursive, 'Arial';
 }
 
 /* STALL GRID */
@@ -580,10 +581,11 @@
   background-color: #6a7442;
 }
 .pinggang-title h1{
-  font-size: 16px;
-  font-weight: bold;
-  font-family: 'Pacifico', cursive;
-  font-size: 22px;
+   text-align: center;
+  font-size: 50px;
+  color: #f6efc2;
+  margin-bottom: 20px;
+    font-family: 'Brush Script MT', cursive, 'Arial'; 
 }
 /* Container */
 .pinggang-container {
@@ -591,16 +593,16 @@
   flex-direction: column;
   align-items: center;
   margin: 30px auto;
-  font-family: "Poppins", Arial, sans-serif;
+     
 }
 
 /* Title */
 .pinggang-title {
   text-align: center;
-  font-size: 40px;
+  font-size: 30px;
   color: #f6efc2;
   margin-bottom: 20px;
-  font-family: 'Pacifico', cursive;
+  font-family: 'Brush Script MT', cursive, 'Arial';   
 }
 
 /* Box that holds image OR content */
@@ -751,6 +753,7 @@
   font-size: 36px;
   font-weight: 700;
   margin-bottom: 20px;
+  font-family: 'Brush Script MT', cursive, 'Arial';   
 }
 
 /* GREEN BAR */

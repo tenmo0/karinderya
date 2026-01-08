@@ -1,5 +1,8 @@
 import { useEffect, useState, useCallback } from "react";
 import "./account.css";
+
+import { BACKEND_URL } from './config';
+
 function MyAccount({ onLogout, userProp }) {
   const [user, setUser] = useState(userProp || null);
   const [loading, setLoading] = useState(!userProp);
@@ -14,14 +17,14 @@ function MyAccount({ onLogout, userProp }) {
 
     const email = localStorage.getItem("userEmail");
     if (!email) {
-      setError("No user logged in");
+      setError("No user logged in");  
       setLoading(false);
       return;
     }
 
     const fetchAccount = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/account?email=${email}`);
+        const res = await fetch(`${BACKEND_URL}/account?email=${email}`);
         const text = await res.text();
 
         let data;

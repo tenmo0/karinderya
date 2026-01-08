@@ -100,5 +100,29 @@
     "email": "ralph.frani@cvsu.edu.ph",
     "password": "12345678",
     "createdAt": "2026-01-04T10:16:47.852Z"
+  },
+  {
+    "id": 1767625690890,
+    "firstName": "jeann",
+    "lastName": "mabala",
+    "email": "mabala@cvsu.edu.ph",
+    "password": "12345678",
+    "createdAt": "2026-01-05T15:08:10.890Z"
+  },
+  {
+    "id": 1767634638055,
+    "firstName": "neth",
+    "lastName": "asdsada",
+    "email": "wawa@cvsu.edu.ph",
+    "password": "12345678",
+    "createdAt": "2026-01-05T17:37:18.055Z"
+  },
+  {
+    "id": 1767870929522,
+    "firstName": "jin",
+    "lastName": "isami",
+    "email": "jin@cvsu.edu.ph",
+    "password": "12345678",
+    "createdAt": "2026-01-08T11:15:29.522Z"
   }
 ]

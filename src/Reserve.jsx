@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./reserve.css";
 
-const BACKEND_URL = "http://192.168.18.3:5000";
+import { BACKEND_URL } from './config';
 
 function Reserve({ user, ulam, activeStall, onClose }) {
   const [withRice, setWithRice] = useState(false);

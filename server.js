@@ -2,9 +2,10 @@ const express = require("express");
 const cors = require("cors");
 const fs = require("fs");
 const path = require("path");
+const SERVER_CONFIG = require("./server-config");
 
 const app = express();
-const PORT = 5000;
+const PORT = SERVER_CONFIG.PORT;
 
 // ===== MIDDLEWARE =====
 app.use(cors());
@@ -268,13 +269,13 @@ app.use((req, res) => {
 });
 
 // ===== START SERVER =====
-app.listen(PORT, "0.0.0.0", () => {
+app.listen(PORT, SERVER_CONFIG.HOST, () => {
   console.log("\n================================");
   console.log("SERVER STARTED SUCCESSFULLY");
   console.log("================================");
   console.log(`Backend running on:`);
   console.log(`  http://localhost:${PORT}`);
-  console.log(`  http://192.168.18.3:${PORT}`);
+  console.log(`  http://${SERVER_CONFIG.DISPLAY_IP}:${PORT}`);
   console.log("================================");
   console.log("Available routes:");
   console.log("  GET    /api/health");
