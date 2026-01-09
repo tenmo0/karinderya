@@ -1,8 +1,7 @@
-
 import './App.css'
 import { useState, useEffect } from "react";
 
-
+import { BACKEND_URL } from './config';
 
 function Home({ goLogin }) {
   
@@ -60,6 +59,8 @@ function Home({ goLogin }) {
 /* ================= LOGIN ================= */
 import SignupModal from "./SignupModal"
 import MyAccount from './MyAccount';
+import History from './History';
+
 
 function Login({ goBack, onLoginSuccess }) {
   const [email, setEmail] = useState("");
@@ -216,7 +217,7 @@ function Navbar({ setPage, onLogout }) {
             </li>
 
             <li>
-              <button onClick={() => goTo("ulam")}>
+              <button onClick={() => goTo("history")}>
                 HISTORY
               </button>
             </li>
@@ -248,7 +249,6 @@ function Navbar({ setPage, onLogout }) {
 
 import Reserve from "./Reserve"; // new component
 import "./reserve.css";
-import { BACKEND_URL } from './config'; // ✅ Import from config
 
 
 function Eateries({ user: userProp }) {
@@ -409,7 +409,7 @@ function About() {
             <h2>Our Story</h2>
             <p>
               We know how frustrating it can be to spend half your lunch break
-              waiting in line for food. That’s why we built the Smart Canteen
+              waiting in line for food. That's why we built the Smart Canteen
               Management System — a faster, smarter way to enjoy your meals.
             </p>
             <p>
@@ -435,7 +435,7 @@ function About() {
 
        {page === 2 && (
   <section className="about">
-    <h2 class="founders-title">The Founders</h2>
+    <h2 className="founders-title">The Founders</h2>
     <ul className="founders">
       <li>
         <img src="public/k.png" alt="Kheneth Sorbito" />
@@ -492,6 +492,10 @@ function Cafeteria({ user, onLogout }) {
 
       {tab === "account" && (
         <MyAccount userProp={user} onLogout={onLogout} />
+      )}
+
+      {tab === "history" && (
+        <History user={user} />
       )}
     </div>
   );

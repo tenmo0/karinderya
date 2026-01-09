@@ -247,6 +247,32 @@ app.post("/reserve", (req, res) => {
   }
 });
 
+// ===== HISTORY ROUTE =====
+app.get("/history", (req, res) => {
+  try {
+    const { email } = req.query;
+    console.log("HISTORY REQUEST:", email);
+
+    if (!email) {
+      return res.status(400).json({ message: "Email required" });
+    }
+
+    // Read all reservations
+    const reserves = readJSON(RESERVE_FILE);
+
+    // Filter reservations by user email and sort by date (newest first)
+    const userReservations = reserves
+      .filter((r) => r.userEmail === email)
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+    console.log(`Found ${userReservations.length} reservations for ${email}`);
+    res.json(userReservations);
+  } catch (err) {
+    console.error("HISTORY ERROR:", err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 // ===== SERVE STATIC FILES (BEFORE 404 HANDLER!) =====
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -281,6 +307,7 @@ app.listen(PORT, SERVER_CONFIG.HOST, () => {
   console.log("  GET    /api/health");
   console.log("  GET    /ulams");
   console.log("  GET    /account");
+  console.log("  GET    /history");
   console.log("  POST   /signup");
   console.log("  POST   /login");
   console.log("  POST   /reserve");

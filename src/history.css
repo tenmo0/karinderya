@@ -1,0 +1,168 @@
+/* History Container */
+.history-container {
+  background: #132f0f;
+  padding: 20px;
+  min-height: 100vh;
+  color: #f6efc2;
+}
+
+/* Title */
+.history-title {
+  text-align: center;
+  font-size: 40px;
+  color: #f6efc2;
+  margin-bottom: 30px;
+  font-family: 'Pacifico', cursive;
+}
+
+/* Loading/Error States */
+.loading-text,
+.error-text {
+  text-align: center;
+  font-size: 16px;
+  color: #f6efc2;
+  margin-top: 40px;
+}
+
+.error-text {
+  color: #ff6b6b;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  margin-top: 60px;
+}
+
+.empty-state p {
+  font-size: 18px;
+  color: #f6efc2;
+  margin-bottom: 10px;
+}
+
+.empty-subtitle {
+  font-size: 14px;
+  color: #b8d688;
+  opacity: 0.8;
+}
+
+/* History List */
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 600px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+/* Scrollbar Styling */
+.history-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.history-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.history-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+
+.history-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* History Card */
+.history-card {
+  background: linear-gradient(135deg, #2d5a2d 0%, #1e4a1e 100%);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.history-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* Card Header */
+.history-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.stall-badge {
+  background: #0a7a0a;
+  color: #fff;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.price-badge {
+  background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
+  color: #1e4a1e;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* Card Body */
+.history-card-body {
+  margin-bottom: 12px;
+}
+
+.ulam-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: #f6efc2;
+  margin: 0 0 6px 0;
+}
+
+.rice-info {
+  font-size: 14px;
+  color: #b8d688;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Card Footer */
+.history-card-footer {
+  padding-top: 12px;
+  border-top: 1px solid rgba(246, 239, 194, 0.2);
+}
+
+.date-text {
+  font-size: 12px;
+  color: #b8d688;
+  opacity: 0.8;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .history-container {
+    padding: 16px;
+  }
+
+  .history-title {
+    font-size: 32px;
+    margin-bottom: 20px;
+  }
+
+  .history-list {
+    max-height: 500px;
+  }
+
+  .ulam-name {
+    font-size: 18px;
+  }
+}

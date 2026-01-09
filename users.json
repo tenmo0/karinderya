@@ -124,5 +124,13 @@
     "email": "jin@cvsu.edu.ph",
     "password": "12345678",
     "createdAt": "2026-01-08T11:15:29.522Z"
+  },
+  {
+    "id": 1767965974768,
+    "firstName": "nen",
+    "lastName": "wawa",
+    "email": "wawaa@cvsu.edu.ph",
+    "password": "12345678",
+    "createdAt": "2026-01-09T13:39:34.768Z"
   }
 ]
