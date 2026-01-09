@@ -522,7 +522,7 @@
   font-size: 50px;
   color: #f6efc2;
   margin-bottom: 20px;
-    font-family: 'Brush Script MT', cursive, 'Arial';
+  font-family: 'Brush Script MT', cursive, 'Arial';
 }
 
 /* STALL GRID */
@@ -580,13 +580,7 @@
 .side-menu li:hover {
   background-color: #6a7442;
 }
-.pinggang-title h1{
-   text-align: center;
-  font-size: 50px;
-  color: #f6efc2;
-  margin-bottom: 20px;
-    font-family: 'Brush Script MT', cursive, 'Arial'; 
-}
+
 /* Container */
 .pinggang-container {
   display: flex;
@@ -597,13 +591,7 @@
 }
 
 /* Title */
-.pinggang-title {
-  text-align: center;
-  font-size: 30px;
-  color: #f6efc2;
-  margin-bottom: 20px;
-  font-family: 'Brush Script MT', cursive, 'Arial';   
-}
+
 
 /* Box that holds image OR content */
 .pinggang-box {
@@ -644,10 +632,11 @@
 /* Title */
 .pinggang-title {
   text-align: center;
-  font-size: 40px;
+   font-size: 50px;
   color: #f6efc2;
   margin-bottom: 20px;
-  font-family: 'Pacifico', cursive;
+  
+  font-family: 'Brush Script MT', cursive, 'Arial'; 
 }
 
 /* Box that holds image OR content */
@@ -749,12 +738,7 @@
 }
 
 /* TITLE */
-.about-title {
-  font-size: 36px;
-  font-weight: 700;
-  margin-bottom: 20px;
-  font-family: 'Brush Script MT', cursive, 'Arial';   
-}
+
 
 /* GREEN BAR */
 .about-bar {
@@ -854,12 +838,12 @@
 /* Page title */
 .about-title {
   margin-top: 14px;
-  font-size: 40px;
+   font-size: 50px;
   font-weight: bold;
  
  color: #f6ebc1; /* light yellow */
   margin-bottom: 10px;
-  font-family: 'Pacifico', cursive;
+  font-family: 'Brush Script MT', cursive, 'Arial';   
 }
 
 /* Main card */
