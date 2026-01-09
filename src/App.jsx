@@ -221,7 +221,12 @@ function Navbar({ setPage, onLogout }) {
                 HISTORY
               </button>
             </li>
-
+             <li>
+              <button onClick={() => goTo("ULAMS")}>
+                ULAM OF TODAY
+              </button>
+            </li>
+        
             <li>
               <button onClick={() => goTo("about")}>
                 ABOUT US
