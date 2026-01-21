@@ -9,11 +9,12 @@
 /* Title */
 .history-title {
   text-align: center;
-  font-size: 40px;
+  font-size: 50px;
   color: #f6efc2;
-  margin-bottom: 30px;
-  font-family: 'Pacifico', cursive;
+  margin-bottom: 20px;
+  font-family: 'Brush Script MT', cursive, 'Arial';
 }
+
 
 /* Loading/Error States */
 .loading-text,
@@ -51,28 +52,36 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  max-height: 600px;
+  max-height: 300px;
   overflow-y: auto;
   padding-right: 8px;
 }
 
-/* Scrollbar Styling */
+/* Scrollbar Styling - More Visible */
 .history-list::-webkit-scrollbar {
-  width: 6px;
+  width: 10px;
 }
 
 .history-list::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(246, 239, 194, 0.1);
   border-radius: 10px;
+  margin: 4px 0;
 }
 
 .history-list::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3);
+  background: #b8d688;
   border-radius: 10px;
+  border: 2px solid #132f0f;
 }
 
 .history-list::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.4);
+  background: #f6efc2;
+}
+
+/* Firefox Scrollbar */
+.history-list {
+  scrollbar-width: thin;
+  scrollbar-color: #b8d688 rgba(246, 239, 194, 0.1);
 }
 
 /* History Card */
@@ -159,7 +168,7 @@
   }
 
   .history-list {
-    max-height: 500px;
+    max-height: 250px;
   }
 
   .ulam-name {

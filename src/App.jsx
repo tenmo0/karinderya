@@ -10,10 +10,7 @@ function Home({ goLogin }) {
     "public/3.png",
     "public/4.png",
     "public/5.png",
-    
     "public/7.png",
-    
-    
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -43,15 +40,15 @@ function Home({ goLogin }) {
       </div> 
 
       <div className="home-bottom">
-  <div className="text-section">
-    <h1>CVSU Cafeteria</h1>
-    <p>EAT MORE, WORRY LESS</p>
-  </div>
+        <div className="text-section">
+          <h1>CVSU Cafeteria</h1>
+          <p>EAT MORE, WORRY LESS</p>
+        </div>
 
-  <div className="logo-section">
-    <img src="src/LOGO.png" alt="CVSU Cafeteria Logo" />
-  </div>
-</div>
+        <div className="logo-section">
+          <img src="src/LOGO.png" alt="CVSU Cafeteria Logo" />
+        </div>
+      </div>
     </div>
   )
 }
@@ -60,12 +57,14 @@ function Home({ goLogin }) {
 import SignupModal from "./SignupModal"
 import MyAccount from './MyAccount';
 import History from './History';
-
+import ULAMS from './Ulams';
+import LiveOrders from './Liveorders'; // 🔥 IoT Feature
 
 function Login({ goBack, onLoginSuccess }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showSignup, setShowSignup] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -83,15 +82,9 @@ function Login({ goBack, onLoginSuccess }) {
       const data = await res.json();
 
       if (res.ok) {
-  // ✅ SAVE USER FOR EATERIES & REFRESH
-  localStorage.setItem("user", JSON.stringify(data.user));
-
-  onLoginSuccess(data.user);
-}if (res.ok) {
-        // Login successful
+        localStorage.setItem("user", JSON.stringify(data.user));
         onLoginSuccess(data.user);
       } else if (data && data.message) {
-        // Server returned an error message
         alert(data.message);
       } else {
         alert("Unknown error occurred");
@@ -126,12 +119,21 @@ function Login({ goBack, onLoginSuccess }) {
           />
 
           <label>PASSWORD:</label>
-          <input
-            type="password"
-            placeholder="Enter your password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <div className="password-input-container">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <button 
+              type="button"
+              className="password-toggle-btn"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? "👁️" : "👁️‍🗨️"}
+            </button>
+          </div>
 
           <button className="login-submit" onClick={handleLogin}>
             LOGIN
@@ -150,8 +152,7 @@ function Login({ goBack, onLoginSuccess }) {
       {showSignup && <SignupModal close={() => setShowSignup(false)} />}
     </div>
   );
-}
-
+}   
 
 function Tabs({ setPage }) {
   return (
@@ -162,9 +163,13 @@ function Tabs({ setPage }) {
     </div>
   )
 }
+
 /* ================= CAFETERIA UI ================= */
-function Navbar({ setPage, onLogout }) {
+function Navbar({ setPage, onLogout, user }) { // 🔥 Added user prop
   const [open, setOpen] = useState(false);
+
+  // 🔥 Check if user is admin
+  const isAdmin = user?.email === "admin@cvsu.edu.ph";
 
   const goTo = (page) => {
     setPage(page);
@@ -176,8 +181,7 @@ function Navbar({ setPage, onLogout }) {
       {/* Top Navbar */}
       <div className="nav">
         <div className="menu-icon" onClick={() => setOpen(!open)}>
-          <img className="menu-icon" src="public/menu.png"  />
-        
+          <img className="menu-icon" src="public/menu.png" />
         </div>
 
         <div className="nav-logo">
@@ -194,8 +198,7 @@ function Navbar({ setPage, onLogout }) {
           <ul>
             <li>
               <button className="menu-icon" onClick={() => goTo("eateries")}>
-            
-               <img className="menu-icon" src="public/menu.png"  />
+                <img className="menu-icon" src="public/menu.png" />
               </button>
             </li>
             <li>
@@ -210,6 +213,15 @@ function Navbar({ setPage, onLogout }) {
               </button>
             </li>
 
+            {/* 🔥 SHOW LIVE ORDERS ONLY FOR ADMIN */}
+            {isAdmin && (
+              <li>
+                <button onClick={() => goTo("live-orders")} style={{ color: '#ffd700' }}>
+                  📡 LIVE ORDERS
+                </button>
+              </li>
+            )}
+
             <li>
               <button onClick={() => goTo("pinggang")}>
                 PINGGANG PINOY
@@ -221,8 +233,9 @@ function Navbar({ setPage, onLogout }) {
                 HISTORY
               </button>
             </li>
-             <li>
-              <button onClick={() => goTo("ULAMS")}>
+
+            <li>
+              <button onClick={() => goTo("ulams")}>
                 ULAM OF TODAY
               </button>
             </li>
@@ -237,7 +250,7 @@ function Navbar({ setPage, onLogout }) {
               <button
                 className="logout-btn"
                 onClick={() => {
-                  onLogout();     // 🔥 App.handleLogout
+                  onLogout();
                   setOpen(false);
                 }}
               >
@@ -251,10 +264,8 @@ function Navbar({ setPage, onLogout }) {
   );
 }
 
-
-import Reserve from "./Reserve"; // new component
+import Reserve from "./Reserve";
 import "./reserve.css";
-
 
 function Eateries({ user: userProp }) {
   const [user] = useState(() => {
@@ -287,17 +298,16 @@ function Eateries({ user: userProp }) {
     fetchUlams();
   }, []);
 
-  // ✅ CHANGED: Images now load from frontend public folder
- const getImageUrl = (imagePath) => {
-  if (!imagePath) return "";
-  return `${BACKEND_URL}${imagePath}`;
-};
+  const getImageUrl = (imagePath) => {
+    if (!imagePath) return "";
+    return `${BACKEND_URL}${imagePath}`;
+  };
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
     <div className="content">
-      {/* ===== STALL SELECT ===== */}
       {activeStall === null && (
         <>
           <h2 className="title_EATERIES">Eateries</h2>
@@ -308,7 +318,7 @@ function Eateries({ user: userProp }) {
         </>
       )}
 
-      {[1, 2,3].map((stallNum) => {
+      {[1, 2].map((stallNum) => {
         if (activeStall !== stallNum) return null;
         const stallUlams = ulams.filter((u) => Number(u.stall) === stallNum);
         const ulamOfToday = stallUlams.find((u) => u.isUlamOfTheDay) || stallUlams[0];
@@ -361,7 +371,6 @@ function Pinggang() {
     <div className="pinggang-container">
       <h1 className="pinggang-title">Pinggang Pinoy</h1>
 
-      {/* SAME DIV – content changes */}
       <div className="pinggang-box">
         {!showDesc ? (
           <img
@@ -372,33 +381,34 @@ function Pinggang() {
           />
         ) : (
           <div className="pinggang-content">
-  <p>
-    <strong>Pinggang Pinoy</strong>, developed by the FNRI with the WHO, DOH, and NNC,
-    promotes balanced meals with the right mix of <strong>Go, Grow, and Glow</strong> foods.
-    It helps Filipinos make healthier food choices, control portions, and build habits
-    that support overall well-being.
-  </p>
+            <p>
+              <strong>Pinggang Pinoy</strong>, developed by the FNRI with the WHO, DOH, and NNC,
+              promotes balanced meals with the right mix of <strong>Go, Grow, and Glow</strong> foods.
+              It helps Filipinos make healthier food choices, control portions, and build habits
+              that support overall well-being.
+            </p>
 
-  <ul>
-    <li>
-      <span className="label go">Go foods:</span>
-      Give energy for school and play – like rice, bread, and pasta.
-    </li>
-    <li>
-      <span className="label grow">Grow foods:</span>
-      Build strong muscles and body – like meat, fish, eggs, and milk.
-    </li>
-    <li>
-      <span className="label glow">Glow foods:</span>
-      Keep skin, hair, and eyes healthy – like fruits and vegetables.
-    </li>
-  </ul>
-</div>
+            <ul>
+              <li>
+                <span className="label go">Go foods:</span>
+                Give energy for school and play – like rice, bread, and pasta.
+              </li>
+              <li>
+                <span className="label grow">Grow foods:</span>
+                Build strong muscles and body – like meat, fish, eggs, and milk.
+              </li>
+              <li>
+                <span className="label glow">Glow foods:</span>
+                Keep skin, hair, and eyes healthy – like fruits and vegetables.
+              </li>
+            </ul>
+          </div>
         )}
       </div>
     </div>
   );
 }
+
 function About() {
   const [page, setPage] = useState(0);
 
@@ -406,9 +416,7 @@ function About() {
     <div className="about-container">
       <h1 className="about-title">About Us</h1>
 
-      {/* SAME DIV – content changes */}
       <div className="about-box">
-
         {page === 0 && (
           <div className="about-content">
             <h2>Our Story</h2>
@@ -438,29 +446,26 @@ function About() {
           </div>
         )}
 
-       {page === 2 && (
-  <section className="about">
-    <h2 className="founders-title">The Founders</h2>
-    <ul className="founders">
-      <li>
-        <img src="public/k.png" alt="Kheneth Sorbito" />
-        <p>Kheneth Sorbito</p>
-      </li>
-      <li>
-        <img src="public/m.png" alt="Marinelle Facundo" />
-        <p>Marinelle Facundo</p>
-      </li>
-      <li>
-        <img src="public/D.png" alt="Denver Risma" />
-        <p>Denver Risma</p>
-      </li>
-    </ul>
-  </section>
-)}
+        {page === 2 && (
+          <section className="about">
+            <h2 className="founders-title">The Founders</h2>
+            <ul className="founders">
+              <li>
+                <img src="public/k.png" alt="Kheneth Sorbito" />
+                <p>Kheneth Sorbito</p>
+              </li>
+              <li>
+                <img src="public/m.png" alt="Marinelle Facundo" />
+                <p>Marinelle Facundo</p>
+              </li>
+              <li>
+                <img src="public/D.png" alt="Denver Risma" />
+                <p>Denver Risma</p>
+              </li>
+            </ul>
+          </section>
+        )}
 
-
-
-        {/* Navigation (same box) */}
         <div className="about-nav">
           <button
             onClick={() => setPage(page - 1)}
@@ -476,40 +481,42 @@ function About() {
             Next
           </button>
         </div>
-
       </div>
     </div>
   );
 }
+
 function Cafeteria({ user, onLogout }) {
   const [tab, setTab] = useState("eateries");
 
+  // 🔥 Check if user is admin
+  const isAdmin = user?.email === "admin@cvsu.edu.ph";
+
   return (
     <div className="phone">
-      <Navbar setPage={setTab} onLogout={onLogout} />
+      <Navbar setPage={setTab} onLogout={onLogout} user={user} /> {/* 🔥 Pass user */}
       <Tabs setPage={setTab} />
 
-      {/* ✅ PASS USER HERE */}
       {tab === "eateries" && <Eateries user={user} />}
-
       {tab === "pinggang" && <Pinggang setPage={setTab} />}
       {tab === "about" && <About />}
+      {tab === "account" && <MyAccount userProp={user} onLogout={onLogout} />}
+      {tab === "history" && <History user={user} />}
+      {tab === "ulams" && <ULAMS user={user} />}
 
-      {tab === "account" && (
-        <MyAccount userProp={user} onLogout={onLogout} />
-      )}
-
-      {tab === "history" && (
-        <History user={user} />
+      {/* 🔥 LIVE ORDERS - ADMIN ONLY */}
+      {tab === "live-orders" && isAdmin && <LiveOrders />}
+      {tab === "live-orders" && !isAdmin && (
+        <div className="content" style={{ textAlign: 'center', padding: '50px', color: '#f6efc2' }}>
+          <h2>🔒 Access Denied</h2>
+          <p>Only administrators can view live orders.</p>
+        </div>
       )}
     </div>
   );
 }
 
-
-
 /* ================= APP CONTROLLER ================= */
-
 export default function App() {
   const [page, setPage] = useState("home");
   const [user, setUser] = useState(null);
@@ -520,10 +527,10 @@ export default function App() {
   };
 
   const handleLogout = () => {
-  localStorage.removeItem("user");
-  setUser(null);
-  setPage("home");
-};
+    localStorage.removeItem("user");
+    setUser(null);
+    setPage("home");
+  };
 
   return (
     <>
@@ -533,7 +540,7 @@ export default function App() {
         <Login
           goBack={() => setPage("home")}
           onLoginSuccess={handleLoginSuccess}
-        />
+        />  
       )}
 
       {page === "cafeteria" && (

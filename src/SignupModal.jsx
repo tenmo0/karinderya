@@ -8,6 +8,7 @@ function SignupModal({ close }) {
   const [lastName, setLastName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [showPassword, setShowPassword] = useState(false)
 
   const handleSignup = async () => {
     if (!firstName || !lastName || !email || !password) {
@@ -72,12 +73,21 @@ function SignupModal({ close }) {
         />
 
         <label>Password:</label>
-        <input
-          type="password"
-          placeholder="Enter password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-        />
+        <div className="password-input-container">
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Enter password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+          />
+          <button 
+            type="button"
+            className="password-toggle-btn"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? "👁️" : "👁️‍🗨️"}
+          </button>
+        </div>
 
         <div className="signup-buttons">
           <button onClick={handleSignup}>Sign Up</button>

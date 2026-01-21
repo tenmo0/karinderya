@@ -145,6 +145,7 @@
 }
 
 /* CENTER CONTAINER */
+
 .login-container {
   flex: 1;
   display: flex;
@@ -194,6 +195,46 @@
   font-size: 14px;
   transition: all 0.3s ease;
   box-sizing: border-box;
+}
+
+/* PASSWORD INPUT CONTAINER */
+.password-input-container {
+  position: relative;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+/* Password input needs extra padding for the toggle button and NO margin */
+.password-input-container input {
+  padding: 12px 45px 12px 14px !important;  /* Extra padding on right for button */
+  margin-bottom: 0 !important;   /* Remove margin since container has it */
+}
+
+/* Password toggle button */
+.password-toggle-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1d3b1d;
+  transition: opacity 0.2s ease;
+  line-height: 1;
+}
+
+.password-toggle-btn:hover {
+  opacity: 0.7;
+}
+
+.password-toggle-btn:focus {
+  outline: none;
 }
 
 .login-body input:focus,
@@ -283,61 +324,136 @@
 
 /* ================= CAFETERIA ================= */
 
-/* ===========================
-   NAVIGATION BAR
-   =========================== */
 .nav {
-  background: #132f0f;
+  background: linear-gradient(135deg, #1a3a1a 0%, #132f0f 100%);
   color: #f6efc2;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 18px;
+  padding: 16px 20px;
   margin-top: 50px;
+  border-radius: 15px 15px 0 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border-bottom: 2px solid rgba(246, 239, 194, 0.1);
 }
 
 /* Menu Icon Container */
 .nav .menu-icon {
   cursor: pointer;
-  transition: opacity 0.2s ease;
+  transition: all 0.3s ease;
+  padding: 5px;
+  border-radius: 8px;
 }
 
 .nav .menu-icon:hover {
   opacity: 0.8;
+  background: rgba(246, 239, 194, 0.1);
+  transform: scale(1.05);
 }
 
+/* INCREASED: Menu Icon Image */
 .nav .menu-icon img {
-  width: 30px;
-  height: 30px;
+  width: 42px;
+  height: 42px;
   object-fit: contain;
   display: block;
+  filter: brightness(0) invert(1);
 }
 
 /* Nav Logo */
 .nav-logo {
   text-align: center;
+  flex: 1;
 }
 
 .nav-logo h1 {
-  font-weight: bold;
+  font-weight: normal;
   font-family: 'Brush Script MT', cursive, 'Arial';
-  font-size: 22px;
+  font-size: 28px;
   margin: 0;
   color: #f6efc2;
+  font-style: italic;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .nav-logo p {
-  font-size: 10px;
-  letter-spacing: 1px;
-  margin: 4px 0 0 0;
+  font-size: 11px;
+  letter-spacing: 2px;
+  margin: 2px 0 0 0;
   color: #f6efc2;
+  text-transform: uppercase;
+  font-weight: 500;
+  opacity: 0.9;
 }
 
-/* Nav Logo Image */
+/* INCREASED: Nav Logo Image */
 .nav-img {
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   object-fit: contain;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+  transition: transform 0.3s ease;
+}
+
+.nav-img:hover {
+  transform: rotate(5deg) scale(1.05);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .nav {
+    padding: 14px 16px;
+    margin-top: 40px;
+  }
+
+  .nav-logo h1 {
+    font-size: 24px;
+  }
+
+  .nav-logo p {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+  }
+
+  /* INCREASED: Tablet menu icon */
+  .nav .menu-icon img {
+    width: 36px;
+    height: 36px;
+  }
+
+  /* INCREASED: Tablet logo */
+  .nav-img {
+    width: 52px;
+    height: 52px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav {
+    padding: 12px 14px;
+    margin-top: 35px;
+  }
+
+  .nav-logo h1 {
+    font-size: 20px;
+  }
+
+  .nav-logo p {
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
+
+  /* INCREASED: Mobile menu icon */
+  .nav .menu-icon img {
+    width: 32px;
+    height: 32px;
+  }
+
+  /* INCREASED: Mobile logo */
+  .nav-img {
+    width: 45px;
+    height: 45px;
+  }
 }
 
 /* ===========================
@@ -967,10 +1083,53 @@
 
 /* PAGE CONTAINER */
 /* CONTAINER */
+/* Content wrapper - needs fixed height for scrolling to work */
+/* Content wrapper - needs fixed height for scrolling to work */
+.content {
+  height: calc(100vh - 160px); /* Adjust based on your navbar + tabs height */
+  overflow: hidden;
+  position: relative;
+}
+
+/* Stall container with scrollbar */
 .stall-container {
   background: #f7edbf;
   padding: 20px;
-  min-height: 100vh;
+  padding-bottom: 80px; /* Space for back button */
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* Custom Scrollbar Styling */
+.stall-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.stall-container::-webkit-scrollbar-track {
+  background: #e8dca8;
+  border-radius: 10px;
+  margin: 10px 0;
+}
+
+.stall-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #c39b2c 0%, #a67f1f 100%);
+  border-radius: 10px;
+  border: 2px solid #e8dca8;
+  transition: all 0.3s ease;
+}
+
+.stall-container::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #a67f1f 0%, #8a6718 100%);
+  border-color: #d4c896;
+}
+
+/* Firefox scrollbar */
+.stall-container {
+  scrollbar-width: thin;
+  scrollbar-color: #c39b2c #e8dca8;
 }
 
 /* ULAM OF TODAY TITLE */
@@ -980,6 +1139,9 @@
   letter-spacing: 2px;
   color: #c39b2c;
   margin-bottom: 10px;
+  margin-top: 0;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
 /* STALL HEADER */
@@ -989,41 +1151,58 @@
   padding: 10px;
   text-align: center;
   border-radius: 6px;
+  margin-bottom: 10px;
 }
 
 .stall-header h1 {
   color: #f3f0d0;
   font-family: cursive;
   margin: 0;
+  font-size: 24px;
 }
 
-/* ULAM OF DAY BAR */
+/* ULAM OF DAY BANNER */
 .ulam-today-banner {
   background: #0b7a16;
   color: #fff;
   text-align: center;
-  padding: 6px;
+  padding: 8px;
   font-weight: 700;
   margin: 12px 0;
-  border-radius: 4px;
+  border-radius: 6px;
+  letter-spacing: 1px;
+  font-size: 13px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* GRID */
+/* ULAM GRID */
 .ulam-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 14px;
   margin-top: 14px;
+  margin-bottom: 20px;
 }
 
-/* CARD */
+/* ULAM CARD */
 .ulam-card {
   background: #0b7a16;
-  padding: 10px;
-  border-radius: 6px;
+  padding: 12px;
+  border-radius: 8px;
   text-align: center;
   position: relative;
   cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.ulam-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.ulam-card:active {
+  transform: translateY(-2px);
 }
 
 .ulam-card img {
@@ -1031,54 +1210,149 @@
   height: 100px;
   border-radius: 50%;
   object-fit: cover;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s ease;
 }
 
-/* NAME */
-.ulam-name {
-  display: block;
-  margin-top: 6px;
-  font-weight: 700;
-  color: #f7ffcf;
-}
-
-/* FEATURED */
-.ulam-card.featured {
-  box-shadow: 0 0 0 3px #ffd84d;
-}
-
-/* STAR */
-.star {
-  position: absolute;
-  top: 6px;
-  right: 8px;
-  color: #ffd84d;
-  font-size: 18px;
-}
-
-/* BACK */
-.bb {
-  position: absolute;
-  bottom: 40px;
-  right: 40px;
-
-  background: #1a1a1a;
-  color: #fff;
-  padding: 6px 12px;
-  font-size: 13px;
-  border-radius: 20px;
-  border: none;
-  font-weight: 600;
-  cursor: pointer;
-  opacity: 0.85;
-  transition: all 0.2s ease;
-}   
-
-.bb:hover {
-  opacity: 1;
+.ulam-card:hover img {
   transform: scale(1.05);
 }
 
+/* ULAM NAME */
+.ulam-name {
+  display: block;
+  margin-top: 8px;
+  font-weight: 700;
+  color: #f7ffcf;
+  font-size: 14px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
 
+/* FEATURED CARD */
+.ulam-card.featured {
+  box-shadow: 0 0 0 3px #ffd84d, 0 4px 12px rgba(255, 216, 77, 0.3);
+  background: linear-gradient(135deg, #0b7a16 0%, #0a6b13 100%);
+}
+
+/* STAR ICON */
+.star {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  color: #ffd84d;
+  font-size: 20px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* BACK BUTTON - Inside container, centered at bottom */
+.bb {
+  display: block;
+  margin: 30px auto 20px;
+  background: #1a1a1a;
+  color: #fff;
+  padding: 12px 24px;
+  font-size: 14px;
+  border-radius: 25px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  width: fit-content;
+}
+
+.bb:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  background: #2a2a2a;
+}
+
+.bb:active {
+  transform: translateY(0);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .content {
+    height: calc(100vh - 140px);
+  }
+
+  .stall-container {
+    padding: 16px;
+    padding-bottom: 70px;
+  }
+
+  .ulam-grid {
+    gap: 12px;
+  }
+
+  .ulam-card img {
+    width: 90px;
+    height: 90px;
+  }
+
+  .bb {
+    padding: 10px 20px;
+    font-size: 13px;
+    margin: 25px auto 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .content {
+    height: calc(100vh - 130px);
+  }
+
+  .stall-container {
+    padding: 14px;
+    padding-bottom: 60px;
+  }
+
+  .stall-header h1 {
+    font-size: 20px;
+  }
+
+  .ulam-today-title {
+    font-size: 12px;
+  }
+
+  .ulam-grid {
+    gap: 10px;
+  }
+
+  .ulam-card {
+    padding: 10px;
+  }
+
+  .ulam-card img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .ulam-name {
+    font-size: 13px;
+  }
+
+  .star {
+    font-size: 18px;
+  }
+
+  .bb {
+    padding: 10px 18px;
+    font-size: 12px;
+    margin: 20px auto 10px;
+  }
+}
 
 .ulam-of-the-day {
   background: #0a7a14;
@@ -1210,7 +1484,7 @@
   border-radius: 8px;
   margin-top: 14px;
 }
-
+  
 .close-btn {
   background: transparent;
   color: #f5f1d3;

@@ -7,13 +7,43 @@ const SERVER_CONFIG = require("./server-config");
 const app = express();
 const PORT = SERVER_CONFIG.PORT;
 
+// ===== IOT TRACKING VARIABLES =====
+let connectedDevices = new Set();
+let requestCount = 0;
+let systemStartTime = Date.now();
+let recentActivity = [];
+
 // ===== MIDDLEWARE =====
 app.use(cors());
 app.use(express.json());
 
+// Device tracker - MUST BE FIRST
+app.use((req, res, next) => {
+  requestCount++;
+  const deviceIP = req.ip || req.connection.remoteAddress || 'unknown';
+  connectedDevices.add(deviceIP);
+  
+  // Log for debugging
+  console.log(`[IOT] Device ${deviceIP} connected | Total devices: ${connectedDevices.size}`);
+  
+  recentActivity.unshift({
+    timestamp: new Date().toISOString(),
+    path: req.path,
+    method: req.method,
+    device: deviceIP
+  });
+  
+  if (recentActivity.length > 20) {
+    recentActivity = recentActivity.slice(0, 20);
+  }
+  
+  next();
+});
+
 // Logger middleware
 app.use((req, res, next) => {
-  console.log(`${new Date().toLocaleTimeString()} | ${req.method} ${req.url}`);
+  const timestamp = new Date().toLocaleTimeString();
+  console.log(`${timestamp} | ${req.method} ${req.url}`);
   next();
 });
 
@@ -22,7 +52,6 @@ const USERS_FILE = "./users.json";
 const ULAMS_FILE = "./ulams.json";
 const RESERVE_FILE = "./reserve.json";
 
-// Create files if missing
 [USERS_FILE, ULAMS_FILE, RESERVE_FILE].forEach((file) => {
   if (!fs.existsSync(file)) {
     console.log(`Creating missing file: ${file}`);
@@ -30,7 +59,7 @@ const RESERVE_FILE = "./reserve.json";
   }
 });
 
-// Safe JSON reader
+// Safe JSON reader - MUST BE BEFORE createAdminUser
 const readJSON = (file) => {
   try {
     const content = fs.readFileSync(file, "utf-8");
@@ -41,11 +70,118 @@ const readJSON = (file) => {
   }
 };
 
-// ===== API ROUTES (MUST BE BEFORE STATIC FILES) =====
+// Create admin user on startup
+const createAdminUser = () => {
+  const users = readJSON(USERS_FILE);
+  const adminExists = users.find(u => u.email === "admin@cvsu.edu.ph");
+  
+  if (!adminExists) {
+    const adminUser = {
+      id: Date.now(),
+      firstName: "Admin",
+      lastName: "User",
+      email: "admin@cvsu.edu.ph",
+      password: "admin123",
+      createdAt: new Date().toISOString()
+    };
+    
+    users.push(adminUser);
+    fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2));
+    console.log("✅ Admin user created: admin@cvsu.edu.ph / admin123");
+  } else {
+    console.log("✅ Admin user already exists");
+  }
+};
+
+createAdminUser();
+
+// Helper function to format uptime
+const formatUptime = (ms) => {
+  const seconds = Math.floor(ms / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  
+  if (hours > 0) return `${hours}h ${minutes % 60}m`;
+  if (minutes > 0) return `${minutes}m ${seconds % 60}s`;
+  return `${seconds}s`;
+};
+
+// ===== API ROUTES =====
 
 // Health check
 app.get("/api/health", (req, res) => {
   res.json({ message: "Server is alive" });
+});
+
+// IoT System Status - ENHANCED WITH DEBUG
+app.get("/api/system-status", (req, res) => {
+  const uptime = Date.now() - systemStartTime;
+  const reserves = readJSON(RESERVE_FILE);
+  const users = readJSON(USERS_FILE);
+  
+  console.log(`[DEBUG] Connected Devices: ${connectedDevices.size}, Total Orders: ${reserves.length}`);
+  
+  const stallStats = reserves.reduce((acc, order) => {
+    acc[order.stall] = (acc[order.stall] || 0) + 1;
+    return acc;
+  }, {});
+  
+  res.json({
+    status: "online",
+    uptime: uptime,
+    uptimeFormatted: formatUptime(uptime),
+    connectedDevices: connectedDevices.size,
+    totalRequests: requestCount,
+    totalOrders: reserves.length,
+    totalUsers: users.length,
+    ordersByStall: stallStats,
+    recentActivity: recentActivity.slice(0, 10),
+    timestamp: new Date().toISOString()
+  });
+});
+
+// Real-time Queue Status - ENHANCED
+app.get("/api/queue-status", (req, res) => {
+  const reserves = readJSON(RESERVE_FILE);
+  
+  // Get orders from last 30 minutes
+  const thirtyMinutesAgo = Date.now() - (30 * 60 * 1000);
+  const recentOrders = reserves.filter(order => {
+    return new Date(order.createdAt).getTime() > thirtyMinutesAgo;
+  });
+  
+  console.log(`[DEBUG] Active Orders (last 30 min): ${recentOrders.length}`);
+  
+  const queueByStall = recentOrders.reduce((acc, order) => {
+    if (!acc[order.stall]) {
+      acc[order.stall] = [];
+    }
+    acc[order.stall].push({
+      orderId: order.id,
+      ulam: order.ulamName,
+      customer: order.userName,
+      time: order.createdAt,
+      status: "Pending" // You can add status field to orders later
+    });
+    return acc;
+  }, {});
+  
+  res.json({
+    totalPending: recentOrders.length,
+    queueByStall: queueByStall,
+    recentOrders: recentOrders.slice(0, 5).map(order => ({
+      orderId: order.id,
+      stall: order.stall,
+      ulam: order.ulamName,
+      customer: order.userName,
+      price: order.price,
+      withRice: order.withRice,
+      time: order.createdAt,
+      status: "Pending"
+    })),
+    averageWaitTime: "5 minutes",
+    timestamp: new Date().toISOString()
+  });
 });
 
 // Get all ulams
@@ -59,7 +195,7 @@ app.get("/ulams", (req, res) => {
   }
 });
 
-// ===== SIGNUP ROUTE =====
+// SIGNUP ROUTE
 app.post("/signup", (req, res) => {
   try {
     const { firstName, lastName, email, password } = req.body;
@@ -103,7 +239,7 @@ app.post("/signup", (req, res) => {
   }
 });
 
-// ===== LOGIN ROUTE =====
+// LOGIN ROUTE
 app.post("/login", (req, res) => {
   try {
     const { email, password } = req.body;
@@ -133,7 +269,7 @@ app.post("/login", (req, res) => {
   }
 });
 
-// ===== ACCOUNT ROUTE =====
+// ACCOUNT ROUTE
 app.get("/account", (req, res) => {
   try {
     const { email } = req.query;
@@ -158,7 +294,7 @@ app.get("/account", (req, res) => {
   }
 });
 
-// ===== RESERVE ROUTE =====
+// RESERVE ROUTE
 app.post("/reserve", (req, res) => {
   console.log("\n===================================");
   console.log("RESERVE REQUEST RECEIVED");
@@ -169,7 +305,6 @@ app.post("/reserve", (req, res) => {
     
     console.log("Request body:", JSON.stringify(req.body, null, 2));
 
-    // VALIDATE INPUT
     if (!stall && stall !== 0) {
       console.error("ERROR: Missing stall");
       return res.status(400).json({ message: "Missing stall number" });
@@ -185,7 +320,6 @@ app.post("/reserve", (req, res) => {
       return res.status(400).json({ message: "Missing user email" });
     }
 
-    // FIND USER
     const users = readJSON(USERS_FILE);
     const user = users.find((u) => u.email === userEmail);
     
@@ -194,7 +328,6 @@ app.post("/reserve", (req, res) => {
       return res.status(401).json({ message: "User not found" });
     }
 
-    // FIND ULAM
     const ulams = readJSON(ULAMS_FILE);
     const ulam = ulams.find((u) => {
       return String(u.id) === String(ulamId) || Number(u.id) === Number(ulamId);
@@ -205,16 +338,13 @@ app.post("/reserve", (req, res) => {
       return res.status(404).json({ message: "Ulam not found" });
     }
 
-    // VALIDATE ULAM DATA
     if (ulam.ulamOnlyPrice === undefined || ulam.withRicePrice === undefined) {
       console.error("ERROR: Ulam missing price fields");
       return res.status(500).json({ message: "Ulam configuration error" });
     }
 
-    // CALCULATE PRICE
     const price = withRice ? ulam.withRicePrice : ulam.ulamOnlyPrice;
 
-    // CREATE RESERVATION
     const reserves = readJSON(RESERVE_FILE);
     
     const reservation = {
@@ -229,7 +359,6 @@ app.post("/reserve", (req, res) => {
       createdAt: new Date().toISOString(),
     };
 
-    // SAVE TO FILE
     reserves.push(reservation);
     fs.writeFileSync(RESERVE_FILE, JSON.stringify(reserves, null, 2));
 
@@ -247,7 +376,7 @@ app.post("/reserve", (req, res) => {
   }
 });
 
-// ===== HISTORY ROUTE =====
+// HISTORY ROUTE
 app.get("/history", (req, res) => {
   try {
     const { email } = req.query;
@@ -257,10 +386,8 @@ app.get("/history", (req, res) => {
       return res.status(400).json({ message: "Email required" });
     }
 
-    // Read all reservations
     const reserves = readJSON(RESERVE_FILE);
 
-    // Filter reservations by user email and sort by date (newest first)
     const userReservations = reserves
       .filter((r) => r.userEmail === email)
       .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -273,10 +400,10 @@ app.get("/history", (req, res) => {
   }
 });
 
-// ===== SERVE STATIC FILES (BEFORE 404 HANDLER!) =====
+// SERVE STATIC FILES
 app.use(express.static(path.join(__dirname, "public")));
 
-// ===== ERROR HANDLER =====
+// ERROR HANDLER
 app.use((err, req, res, next) => {
   console.error("UNHANDLED ERROR:", err);
   res.status(500).json({
@@ -285,7 +412,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-// ===== 404 HANDLER (MUST BE ABSOLUTE LAST) =====
+// 404 HANDLER
 app.use((req, res) => {
   console.log("404 - Not found:", req.method, req.url);
   res.status(404).json({
@@ -294,23 +421,22 @@ app.use((req, res) => {
   });
 });
 
-// ===== START SERVER =====
+// START SERVER
 app.listen(PORT, SERVER_CONFIG.HOST, () => {
   console.log("\n================================");
-  console.log("SERVER STARTED SUCCESSFULLY");
+  console.log("IOT SERVER STARTED");
   console.log("================================");
   console.log(`Backend running on:`);
   console.log(`  http://localhost:${PORT}`);
   console.log(`  http://${SERVER_CONFIG.DISPLAY_IP}:${PORT}`);
   console.log("================================");
-  console.log("Available routes:");
-  console.log("  GET    /api/health");
-  console.log("  GET    /ulams");
-  console.log("  GET    /account");
-  console.log("  GET    /history");
-  console.log("  POST   /signup");
-  console.log("  POST   /login");
-  console.log("  POST   /reserve");
-  console.log("  Static files from /public");
+  console.log("IoT Features Active:");
+  console.log("  - Device tracking");
+  console.log("  - Real-time monitoring");
+  console.log("  - Live order queue");
+  console.log("================================");
+  console.log("Admin Login:");
+  console.log("  Email: admin@cvsu.edu.ph");
+  console.log("  Pass:  admin123");
   console.log("================================\n");
 });

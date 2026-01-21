@@ -13,10 +13,11 @@
 
 /* Title */
 .account-container h2 {
-  font-family: "Pacifico", cursive;
-  font-size: 40px;
-  color: #f6edc1;
-  margin-bottom: 40px;
+text-align: center;
+  font-size: 44px;
+  color: #f6efc2;
+  margin-bottom: 20px;
+  font-family: 'Brush Script MT', cursive, 'Arial';
 }
 
 /* Account card */

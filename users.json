@@ -132,5 +132,78 @@
     "email": "wawaa@cvsu.edu.ph",
     "password": "12345678",
     "createdAt": "2026-01-09T13:39:34.768Z"
+  },
+  {
+    "id": 1768033906230,
+    "firstName": "jinn",
+    "lastName": "isami",
+    "email": "jinn@cvsu.edu.ph",
+    "password": "12345678",
+    "createdAt": "2026-01-10T08:31:46.230Z"
+  },
+  {
+    "id": 1768035441208,
+    "firstName": "kheneth",
+    "lastName": "sorbito",
+    "email": "khenethsorbito@cvsu.edu.ph",
+    "password": "kheneth2555",
+    "createdAt": "2026-01-10T08:57:21.208Z"
+  },
+  {
+    "id": 1768035596985,
+    "firstName": "nethh",
+    "lastName": "dasda",
+    "email": "wer@cvsu.edu.ph",
+    "password": "12345678",
+    "createdAt": "2026-01-10T08:59:56.985Z"
+  },
+  {
+    "id": 1768219830151,
+    "firstName": "Admin",
+    "lastName": "User",
+    "email": "admin@cvsu.edu.ph",
+    "password": "admin123",
+    "role": "admin",
+    "createdAt": "2026-01-12T12:10:30.151Z"
+  },
+  {
+    "id": 1768220888641,
+    "firstName": "Nenen",
+    "lastName": "Kfkfkr",
+    "email": "na@cvsu.edu.ph",
+    "password": "12345678",
+    "createdAt": "2026-01-12T12:28:08.641Z"
+  },
+  {
+    "id": 1768227687956,
+    "firstName": "kok",
+    "lastName": "frani",
+    "email": "frani@cvsu.edu.ph",
+    "password": "12345678",
+    "createdAt": "2026-01-12T14:21:27.956Z"
+  },
+  {
+    "id": 1768263500853,
+    "firstName": "steven",
+    "lastName": "sorbito",
+    "email": "steven.villar@cvsu.edu.ph",
+    "password": "12345678",
+    "createdAt": "2026-01-13T00:18:20.853Z"
+  },
+  {
+    "id": 1768292715261,
+    "firstName": "James",
+    "lastName": "Flores",
+    "email": "jamesmaverick1231@cvsu.edu.ph",
+    "password": "123456",
+    "createdAt": "2026-01-13T08:25:15.261Z"
+  },
+  {
+    "id": 1768296885825,
+    "firstName": "kc",
+    "lastName": "merkado",
+    "email": "kc@cvsu.edu.ph",
+    "password": "12345678",
+    "createdAt": "2026-01-13T09:34:45.825Z"
   }
 ]

@@ -1,328 +1,349 @@
-/* OVERLAY */
+/* reserve.css - Updated with one reservation per day styling */
+
 .ulam-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.85);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 999;
-  animation: overlayFadeIn 0.3s ease-out;
-}
-
-@keyframes overlayFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-/* MODAL - MADE SMALLER */
-.ulam-modal {
-  background: linear-gradient(135deg, #4a5a28 0%, #3f4a1e 100%);
-  width: 280px;
-  border-radius: 24px;
-  padding: 12px;
-  color: #fff;
-  text-align: center;
-  position: relative;
-  animation: fadeIn 0.3s ease-in-out;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-}
-
-/* IMAGE - SMALLER */
-.ulam-modal img {
-  width: 200px;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 50%;
-  margin-top: -60px;
-  border: 5px solid #3f4a1e;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-  transition: transform 0.3s ease;
-}
-
-.ulam-modal img:hover {
-  transform: scale(1.05);
-}
-
-/* TITLE - SMALLER */
-.ulam-modal h2 {
-  margin-top: 8px;
-  font-size: 18px;
-  font-weight: 700;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-/* INFO - MORE COMPACT */
-.ulam-info {
-  text-align: left;
-  margin-top: 8px;
-  background: rgba(0, 0, 0, 0.15);
-  padding: 10px;
-  border-radius: 12px;
-}
-
-.ulam-info h4 {
-  font-size: 11px;
-  font-weight: 700;
-  margin: 6px 0 2px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: #b8d688;
-}
-
-.ulam-info p {
-  font-size: 12px;
-  opacity: 0.9;
-  line-height: 1.3;
-}
-
-.description-text {
-  font-size: 11px;
-  line-height: 1.4;
-}
-
-.allergen-text {
-  color: #ffd6d6;
-  font-weight: 600;
-}
-
-/* RICE TOGGLE - SMALLER */
-.rice-options {
-  display: flex;
-  gap: 8px;
-  margin-top: 10px;
-  padding: 3px;
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-}
-
-.rice-options button {
-  flex: 1;
-  padding: 8px;
-  border-radius: 8px;
-  border: none;
-  font-weight: 600;
-  font-size: 13px;
-  cursor: pointer;
-  background: #1e1e1e;
-  color: #fff;
-  transition: all 0.25s ease;
-}
-
-.rice-options button.active {
-  background: linear-gradient(135deg, #1fa44a 0%, #17873d 100%);
-  border: 2px solid #1fa44a;
-  box-shadow: 0 4px 12px rgba(31, 164, 74, 0.4);
-}
-
-.rice-options button:hover {
-  background: #2b2b2b;
-  transform: translateY(-1px);
-}
-
-.rice-options button.active:hover {
-  background: linear-gradient(135deg, #22b855 0%, #1a9545 100%);
-}
-
-/* PRICE - SMALLER */
-.price {
-  font-size: 20px;
-  font-weight: 700;
-  margin: 10px 0;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-/* BUTTONS - MORE COMPACT */
-.reserve-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: 8px;
-}
-
-.reserve-btn {
-  background: linear-gradient(135deg, #1fa44a 0%, #17873d 100%);
-  border: none;
-  padding: 10px;
-  border-radius: 8px;
-  font-weight: 700;
-  font-size: 14px;
-  cursor: pointer;
-  color: #fff;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(31, 164, 74, 0.3);
-}
-
-.reserve-btn:hover {
-  background: linear-gradient(135deg, #22b855 0%, #1a9545 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(31, 164, 74, 0.4);
-}
-
-.reserve-btn:active {
-  transform: translateY(0);
-}
-
-.cancel-btn {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 8px;
-  border-radius: 8px;
-  font-size: 13px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.cancel-btn:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.3);
-}
-
-/* SUCCESS CARD */
-.reserve-success-container {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.85);
-  backdrop-filter: blur(8px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  animation: overlayFadeIn 0.3s ease-out;
-}
-
-.reserve-success-card {
-  background: linear-gradient(135deg, #2d8b2d 0%, #1e7a1e 100%);
-  padding: 30px 25px;
-  border-radius: 15px;
-  text-align: center;
-  color: #fff;
-  min-width: 280px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-  animation: fadeIn 0.3s ease-in-out;
-  position: relative;
-  overflow: hidden;
-}
-
-.reserve-success-card::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
-  animation: shimmer 3s ease-in-out infinite;
-}
-
-@keyframes shimmer {
-  0%, 100% { transform: translate(0, 0); opacity: 0.5; }
-  50% { transform: translate(10%, 10%); opacity: 0.8; }
-}
-
-.reserve-success-card h1 {
-  font-family: 'Brush Script MT', cursive, 'Arial';
-  font-size: 2.2rem;
-  margin: 0 0 25px 0;
-  line-height: 1.2;
-  color: white;
-  font-style: italic;
-  text-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
-  position: relative;
-  z-index: 1;
-}
-
-.reserve-success-card .stall-info {
-  font-size: 0.95rem;
-  font-weight: 600;
-  margin: 12px 0;
-  letter-spacing: 0.5px;
-  position: relative;
-  z-index: 1;
-}
-
-.reserve-success-card .customer-info {
-  font-size: 0.95rem;
-  font-weight: 600;
-  margin: 12px 0 25px 0;
-  letter-spacing: 0.5px;
-  position: relative;
-  z-index: 1;
-}
-
-.reserve-final-btn {
-  background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
-  color: #1e7a1e;
-  border: none;
-  padding: 12px 50px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  border-radius: 8px;
-  cursor: pointer;
-  letter-spacing: 1px;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(255, 193, 7, 0.4);
-  position: relative;
-  z-index: 1;
-}
-
-.reserve-final-btn:hover {
-  background: linear-gradient(135deg, #ffca28 0%, #ffc107 100%);
-  transform: scale(1.05);
-  box-shadow: 0 6px 16px rgba(255, 193, 7, 0.5);
-}
-
-.reserve-final-btn:active {
-  transform: scale(1.02);
-}
-
-/* ERROR BANNER */
-.error-banner {
-  background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
-  color: white;
-  padding: 8px;
-  border-radius: 6px;
-  margin-bottom: 10px;
-  font-size: 12px;
-  font-weight: 600;
-  box-shadow: 0 4px 12px rgba(211, 47, 47, 0.3);
-}
-
-/* ANIMATION */
-.fade-in {
-  animation: fadeIn 0.25s ease-in-out;
+  padding: 20px;
+  animation: fadeIn 0.3s ease;
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: scale(0.95);
   }
   to {
     opacity: 1;
-    transform: scale(1);
   }
 }
 
-/* SCROLLBAR FOR SMALL SCREENS */
-.ulam-modal::-webkit-scrollbar {
-  width: 4px;
+.ulam-modal {
+  background: #3b3f1e;
+  color: #f5f1d3;
+  width: 100%;
+  max-width: 420px;
+  padding: 24px;
+  border-radius: 16px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  animation: slideUp 0.3s ease;
 }
 
-.ulam-modal::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
-.ulam-modal::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 10px;
+.ulam-modal img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 16px;
 }
 
-.ulam-modal::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.4);
+.ulam-modal h2 {
+  text-align: center;
+  font-size: 24px;
+  color: #f1e28b;
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+
+.ulam-info {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.ulam-info h4 {
+  font-size: 12px;
+  color: #c8ff7a;
+  margin-bottom: 6px;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.ulam-info p {
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 12px;
+  color: #f5f1d3;
+}
+
+.ulam-info p:last-child {
+  margin-bottom: 0;
+}
+
+.description-text {
+  text-align: justify;
+}
+
+.allergen-text {
+  font-weight: 600;
+}
+
+.rice-options {
+  display: flex;
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.rice-options button {
+  flex: 1;
+  padding: 12px;
+  border: 2px solid #f5f1d3;
+  background: transparent;
+  color: #f5f1d3;
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+
+.rice-options button:hover:not(:disabled) {
+  background: rgba(245, 241, 211, 0.1);
+  transform: translateY(-2px);
+}
+
+.rice-options button.active {
+  background: #f1e28b;
+  color: #3b3f1e;
+  border-color: #f1e28b;
+}
+
+/* ✅ Disabled state for rice options */
+.rice-options button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background: rgba(100, 100, 100, 0.2);
+  border-color: rgba(245, 241, 211, 0.3);
+}
+
+.price {
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  color: #c8ff7a;
+  margin: 20px 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.reserve-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.reserve-btn {
+  background: #0a7a29;
+  color: #fff;
+  border: none;
+  padding: 14px;
+  width: 100%;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+}
+
+.reserve-btn:hover:not(:disabled) {
+  background: #0d9e32;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(10, 122, 41, 0.4);
+}
+
+.reserve-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* ✅ Disabled state for reserve button */
+.reserve-btn:disabled {
+  background: #4a4a4a;
+  color: #999;
+  cursor: not-allowed;
+  opacity: 0.6;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.cancel-btn {
+  background: transparent;
+  color: #f5f1d3;
+  border: 2px solid #f5f1d3;
+  padding: 12px;
+  width: 100%;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+
+.cancel-btn:hover {
+  background: rgba(245, 241, 211, 0.1);
+  transform: translateY(-2px);
+}
+
+/* ✅ Error banner styling */
+.error-banner {
+  background: #d32f2f;
+  color: white;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  text-align: center;
+  font-weight: 600;
+  animation: shake 0.5s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}
+
+/* Success screen */
+.reserve-success-container {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.reserve-success-card {
+  background: linear-gradient(135deg, #0a7a29 0%, #0d5e20 100%);
+  color: white;
+  padding: 40px 30px;
+  border-radius: 16px;
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+}
+
+.reserve-success-card h1 {
+  font-size: 36px;
+  margin-bottom: 30px;
+  line-height: 1.2;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.stall-info {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+  color: #c8ff7a;
+}
+
+.customer-info {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #f1e28b;
+}
+
+.reservation-date {
+  font-size: 14px;
+  margin-bottom: 30px;
+  color: rgba(255, 255, 255, 0.8);
+  font-style: italic;
+}
+
+.reserve-final-btn {
+  background: white;
+  color: #0a7a29;
+  border: none;
+  padding: 14px 40px;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.reserve-final-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 255, 255, 0.3);
+}
+
+.reserve-final-btn:active {
+  transform: translateY(0);
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease;
+}
+
+/* Loading spinner */
+.loading-spinner {
+  text-align: center;
+  padding: 40px;
+}
+
+.loading-spinner p {
+  font-size: 18px;
+  font-weight: 600;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Mobile responsive */
+@media (max-width: 480px) {
+  .ulam-modal {
+    padding: 20px;
+    max-width: 95%;
+  }
+
+  .ulam-modal h2 {
+    font-size: 20px;
+  }
+
+  .ulam-modal img {
+    height: 160px;
+  }
+
+  .price {
+    font-size: 24px;
+  }
+
+  .reserve-success-card h1 {
+    font-size: 28px;
+  }
+
+  .reserve-btn {
+    font-size: 13px;
+    padding: 12px;
+  }
 }

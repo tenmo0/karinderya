@@ -132,3 +132,6 @@ function Reserve({ user, ulam, activeStall, onClose }) {
 }
 
 export default Reserve;
+
+
+
